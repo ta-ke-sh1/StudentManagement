@@ -28,6 +28,9 @@ class Grade
     #[ORM\Column(type: 'integer')]
     private $numberGrade;
 
+    #[ORM\Column(type: 'string', length: 50)]
+    private $semester;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Grade
     public function setNumberGrade(int $numberGrade): self
     {
         $this->numberGrade = $numberGrade;
+
+        return $this;
+    }
+
+    public function getSemester(): ?string
+    {
+        return $this->semester;
+    }
+
+    public function setSemester(string $semester): self
+    {
+        $this->semester = $semester;
 
         return $this;
     }

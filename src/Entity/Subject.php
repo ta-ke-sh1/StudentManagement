@@ -24,6 +24,12 @@ class Subject
     #[ORM\OneToMany(mappedBy: 'subject', targetEntity: Grade::class)]
     private $grades;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $description;
+
+    #[ORM\Column(type: 'integer')]
+    private $totalSlots;
+
     public function __construct()
     {
         $this->grades = new ArrayCollection();
@@ -100,6 +106,30 @@ class Subject
                 $grade->setSubject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getTotalSlots(): ?int
+    {
+        return $this->totalSlots;
+    }
+
+    public function setTotalSlots(int $totalSlots): self
+    {
+        $this->totalSlots = $totalSlots;
 
         return $this;
     }

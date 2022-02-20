@@ -1,0 +1,28 @@
+.searchBar input[type="search"] {
+    margin-top: -32px;
+    border-radius: 30px;
+    border: 1.2px solid #2f1e5a;
+    margin-left: 20px;
+    padding-left: 20px;
+    width: 480px;
+}
+
+.navbar-nav li {
+    margin-top: -42px;
+    margin-right: 70px;
+    padding: 12px 24px;
+    border-radius: 40px;
+    transition-duration: 0.4s;
+    border: 0.5px solid transparent;
+}
+
+.navbar-nav li a{
+    color: #2f1e5a;
+}
+
+.navbar-nav li:hover  {
+    font-family: "SF-regular";
+    color: #2f1eb8;
+    border: 0.5px solid #2f1eb8;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}

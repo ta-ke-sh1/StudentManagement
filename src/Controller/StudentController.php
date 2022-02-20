@@ -21,7 +21,7 @@ class StudentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'student_index')]
+    #[Route('/detail/{id}', name: 'student_detail')]
     public function studentDetail($id)
     {
         $student = $this->getDoctrine()->getRepository(Student::class)->find($id);
@@ -67,7 +67,7 @@ class StudentController extends AbstractController
         }
     }
 
-    #[Route('/edit/{id}', name: 'student_delete')]
+    #[Route('/edit/{id}', name: 'student_edit')]
     public function studentEdit(Request $request, $id)
     {
         $student = $this->getDoctrine()->getRepository(Student::class)->find($id);
@@ -79,7 +79,7 @@ class StudentController extends AbstractController
             $manager->flush();
             return $this->redirectToRoute("student_list");
         } else {
-            return $this->renderForm("student/add.html.twig", [
+            return $this->renderForm("student/edit.html.twig", [
                 'StudentForm' => $form
             ]);
         }

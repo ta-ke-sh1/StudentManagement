@@ -1,0 +1,31 @@
+h2 {
+    margin-top: 20px;
+    font-family: SF-medium;
+    src: url(../font/SF-Pro-Display-Medium.otf);
+}
+
+h2 .options {
+    font-family: SF-light;
+    font-size: 20px;
+    float: right;
+    margin-right: 120px;
+}
+
+.options .btn {
+    border-radius: 40px;
+    padding: 8px;
+    margin-left: 5px;
+    border: 0.5px solid transparent;
+    transition-duration: 0.5s;
+}
+
+.options .btn:hover {
+    color: #2f1eb8;
+    border: 0.5px solid #2f1eb8;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+        rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.choice{
+    margin-left: 40px;
+}

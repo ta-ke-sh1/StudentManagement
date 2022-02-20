@@ -1,0 +1,11 @@
+{# áp dụng template của bootstrap vào form  #}
+{% form_theme StudentForm 'bootstrap_5_layout.html.twig' %}
+{# kế thừa file layout (template) #}
+{% extends "base.html.twig" %}
+{# override nội dung của phần body trong template #}
+{% block body %}
+<div class="container col-md-4 mt-4 text-center">
+   <h2 class="text text-primary">Add new author</h2>
+   {{ form (StudentForm) }}
+</div>
+{% endblock %}

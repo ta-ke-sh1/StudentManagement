@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/')]
+#[Route('/class')]
 class ClassController extends AbstractController
 {
     #[Route('/', name: 'classFGW_list')]
