@@ -30,6 +30,9 @@ class Student
     #[ORM\OneToMany(mappedBy: 'student', targetEntity: Grade::class)]
     private $grades;
 
+    #[ORM\ManyToOne(targetEntity: ClassFGW::class, inversedBy: 'students')]
+    private $classFGW;
+
     public function __construct()
     {
         $this->grades = new ArrayCollection();
@@ -114,6 +117,18 @@ class Student
                 $grade->setStudent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getClassFGW(): ?ClassFGW
+    {
+        return $this->classFGW;
+    }
+
+    public function setClassFGW(?ClassFGW $classFGW): self
+    {
+        $this->classFGW = $classFGW;
 
         return $this;
     }

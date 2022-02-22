@@ -1,31 +1,62 @@
-.inp{
+.inp {
     width: 500px;
     border-radius: 30px;
     float: left;
     padding: 15px 22px;
     border: 0.5px solid #44609c;
     transition-duration: 0.5s;
-}
-label{
-    margin-top: 20px;
-    margin-left: 20px;
-    float:left;
+    -webkit-file-upload-button: hidden;
 }
 
-.inp:hover{
+.inp::-webkit-file-upload-button {
+    background-color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid #44609c;
+    transition-duration: 0.5s;
+}
+
+.inp::-webkit-file-upload-button:hover {
+    background-color: #44609c;
+    color: white;
+}
+
+label {
+    margin-top: 20px;
+    margin-left: 20px;
+    float: left;
+}
+
+.inp:hover {
     border: 0.5px solid #2e19ce;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
         rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }
 
-#student_Save{
+#student_Save {
     margin-top: 32px;
+    padding: 15px 0px;
     color: white;
     background-color: #44609c;
 }
 
-#student_Save:hover{
+#student_Save:hover {
     margin-top: 32px;
     color: white;
     background-color: #2e19ce;
+}
+
+.myForm {
+    background-color: white;
+    position: absolute;
+    left: 30%;
+    top: 150px;
+    z-index: 1;
+    border-radius: 40px;
+    padding: 30px 30px;
+    width: fit-content;
+    height: 720px;
+    border: 2px solid red;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+        rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }

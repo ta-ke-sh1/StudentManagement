@@ -19,6 +19,77 @@ class StudentRepository extends ServiceEntityRepository
         parent::__construct($registry, Student::class);
     }
 
+
+    /**
+     * @return Student[] Returns an array of Student objects
+     */
+    public function findPage($page, $max)
+    {
+        return $this->createQueryBuilder('student')
+            ->orderBy('student.id', 'ASC')
+            ->setFirstResult(($page - 1) * $max)
+            ->setMaxResults($max)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Student[] Returns an array of Student objects
+     */
+    public function sortByIDAsc()
+    {
+        return $this->createQueryBuilder('student')
+            ->orderBy('student.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Student[] Returns an array of Student objects
+     */
+    public function sortByIDDesc()
+    {
+        return $this->createQueryBuilder('student')
+            ->orderBy('student.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Student[] Returns an array of Student objects
+     */
+    public function sortByNameAsc()
+    {
+        return $this->createQueryBuilder('student')
+            ->orderBy('student.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Student[] Returns an array of Student objects
+     */
+    public function sortByNameDesc()
+    {
+        return $this->createQueryBuilder('student')
+            ->orderBy('student.name', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Student[] Returns an array of Student objects
+     */
+    public function searchStudent($keyword)
+    {
+        return $this->createQueryBuilder('student')
+            ->andWhere('student.name LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->orderBy('student.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Student[] Returns an array of Student objects
     //  */

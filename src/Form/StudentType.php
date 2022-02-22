@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\ClassFGW;
 use App\Entity\Student;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -45,9 +47,19 @@ class StudentType extends AbstractType
                     'class' => 'inp'
                 ]
             ])
-            ->add('image', TextType::class, ['attr' => [
-                'class' => 'inp'
-            ]])
+            ->add('classFGW', EntityType::class, [
+                'label' => 'Select the student\'s class',
+                'class' => ClassFGW::class,
+                'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'inp'
+                ]
+            ])
+            ->add('image', TextType::class, [
+                'attr' => [
+                    'class' => 'inp'
+                ]
+            ])
             ->add('Save', SubmitType::class, [
                 'attr' => [
                     'class' => 'inp',

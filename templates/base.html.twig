@@ -14,7 +14,7 @@
         />
         <link
             rel="stylesheet"
-            href="{{ asset('CSS/inputType.css') }}?version=1.2"
+            href="{{ asset('CSS/inputType.css') }}?version=1.25"
         />
         <link
             rel="stylesheet"
@@ -22,7 +22,7 @@
         />
         <link
             rel="stylesheet"
-            href="{{ asset('CSS/table.css') }}?version=1.232"
+            href="{{ asset('CSS/table.css') }}?version=1.56"
         />
         <link
             rel="stylesheet"
@@ -30,11 +30,19 @@
         />
         <link
             rel="stylesheet"
-            href="{{ asset('CSS/searchBar.css') }}?version=1.2"
+            href="{{ asset('CSS/searchBar.css') }}?version=1.3"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ asset('CSS/buttons.css') }}?version=1.13"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ asset('CSS/widgets.css') }}?version=1.1"
         />
         <script src="{{ asset('JS/navBar.js') }}"></script>
         <style>
-            .bdy{
+            .bdy {
                 margin-left: 32px;
             }
         </style>
@@ -53,8 +61,14 @@
                     <a href="{{ path('homepage') }}" class="nav_logo">
                         <img src="{{ asset('logo/logo_blue.png') }}" alt="" />
                     </a>
+                    <a href="#" class="nav_link">Profile</a>
+                    <hr>
+                    <br>
                     <div class="nav_list">
-                        <a href="{{ path('student_list') }}" class="nav_link">
+                        <a
+                            href="{{ path('student_list')}}"
+                            class="nav_link"
+                        >
                             Students
                         </a>
                         <a href="{{ path('classFGW_list') }}" class="nav_link">
@@ -63,14 +77,18 @@
                         <a href="{{ path('subject_list') }}" class="nav_link">
                             Subject
                         </a>
+                        <hr id="btmline">
                     </div>
                 </div>
+            
+            <a href="#" class="nav_link">Log Out</a>
             </nav>
         </div>
         <!-- Sidebar -->
-        {% endblock %} {% block searchBar %}{% endblock %}
+        {% endblock %}
         <div class="bdy">
-            {% block body %} {% endblock %}
+            {% block body %} {% endblock %} {% block forms %} {% endblock %}
         </div>
     </body>
 </html>
+</nav>

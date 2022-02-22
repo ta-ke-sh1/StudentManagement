@@ -1,5 +1,5 @@
 {# áp dụng template của bootstrap vào form #} {% form_theme StudentForm 'bootstrap_5_layout.html.twig' %} {# kế thừa file layout (template) #} {%
-extends "base.html.twig" %} {% block searchBar %}
+extends "student/index.html.twig" %} {% block searchBar %}
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
         <div class="form-group col-md-4 searchBar">
@@ -27,7 +27,8 @@ extends "base.html.twig" %} {% block searchBar %}
 body %}
 <div class="container col-md-4 mt-4 text-center">
     <h2 class="text text-primary">Add new Student</h2>
+    <div>
     {{ form(StudentForm) }}
-    
+    </div>
 </div>
 {% endblock %}
