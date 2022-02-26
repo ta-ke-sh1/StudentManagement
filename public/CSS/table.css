@@ -1,15 +1,7 @@
-.widget {
-    margin-top: 20px;
-    margin-right: 3%;
-    border-radius: 40px;
-    border: 2px solid #e0e0e0;
-    padding: 22px 42px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
-        rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
-}
+
 
 .tbl {
-    height: 600px;
+    height: 680px;
     overflow: scroll;
 }
 
@@ -37,7 +29,8 @@ thead tr {
     width: 100%;
     text-align: center;
     border: 2px solid #e0e0e0;
-    border-radius: 25px;
+    border-radius: 30px;
+    margin-bottom: 30px;
 }
 
 .tbl th {

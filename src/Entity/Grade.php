@@ -26,7 +26,7 @@ class Grade
     private $letterGrade;
 
     #[ORM\Column(type: 'integer')]
-    private $numberGrade;
+    public $numberGrade;
 
     #[ORM\Column(type: 'string', length: 50)]
     private $semester;

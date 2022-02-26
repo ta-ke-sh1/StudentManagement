@@ -55,7 +55,11 @@ class StudentType extends AbstractType
                     'class' => 'inp'
                 ]
             ])
-            ->add('image', TextType::class, [
+            ->add('image', FileType::class, [
+                'label' => 'Upload the student\'s image',
+                'data_class' => null,
+                'required' => is_null($builder->getData()->getImage()), // getImage(): entity function
+                // if Image == null => required = true; else false
                 'attr' => [
                     'class' => 'inp'
                 ]
@@ -63,6 +67,7 @@ class StudentType extends AbstractType
             ->add('Save', SubmitType::class, [
                 'attr' => [
                     'class' => 'inp',
+                    'id' => 'saveBtn'
                 ]
             ]);
     }

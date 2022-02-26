@@ -1,0 +1,43 @@
+@font-face {
+    font-family: SF-light;
+    src: url(../font/SF-Pro-Display-Light.otf);
+}
+
+@font-face {
+    font-family: SF-medium;
+    src: url(../font/SF-Pro-Display-Medium.otf);
+}
+
+@font-face {
+    font-family: SF-bold;
+    src: url(../font/SF-Pro-Display-Bold.otf);
+}
+
+@font-face {
+    font-family: SF-regular;
+    src: url(../font/SF-Pro-Display-Regular.otf);
+}
+
+:root {
+    --header-height: 3rem;
+    --nav-width: 155px;
+    --first-color: #2f1eb8;
+    --first-color-light: #2f1e5a;
+    --white-color: #2f1eb8;
+    --body-font: "SF-light", sans-serif;
+    --normal-font-size: 17px;
+    --z-fixed: 10;
+}
+
+body {
+    position: relative;
+    margin: var(--header-height) 0 0 0;
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    transition: 0.5s;
+}
+
+label {
+    margin-left: 20px;
+    float: left;
+}

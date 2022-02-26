@@ -1,0 +1,30 @@
+{% extends 'student/header.html.twig' %} {% block body %}
+<div class="container-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col"></div>
+        <div class="col">
+            <img
+                src="{{ asset('students/' ~ student.image ~ '.jpg') }}"
+                alt=""
+                width="500px"
+                height="auto"
+            />
+        </div>
+        <div class="col">
+            <h1>{{ student.name }}</h1>
+            <p>
+                {{ student.major }}
+            </p>
+            <p>
+                {% if student.classFGW %}
+                {{ student.classFGW.name }}
+                {% endif %}
+            </p>
+            <p>
+                {{ student.dob | date('d-m-Y') }}
+            </p>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}

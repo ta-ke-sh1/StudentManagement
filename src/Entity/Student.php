@@ -6,6 +6,7 @@ use App\Repository\StudentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Null_;
 
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
 class Student
@@ -32,6 +33,9 @@ class Student
 
     #[ORM\ManyToOne(targetEntity: ClassFGW::class, inversedBy: 'students')]
     private $classFGW;
+
+    #[ORM\Column(type: 'float')]
+    private $gpa;
 
     public function __construct()
     {
@@ -79,14 +83,17 @@ class Student
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage() // Doi type tu string -> object
     {
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage($image)
     {
-        $this->image = $image;
+        // Neu ng dung update anh thi ms update
+        if ($image != null) {
+            $this->image = $image;
+        }
 
         return $this;
     }
@@ -129,6 +136,28 @@ class Student
     public function setClassFGW(?ClassFGW $classFGW): self
     {
         $this->classFGW = $classFGW;
+
+        return $this;
+    }
+
+    public function getGpa(Grade $grade): ?float
+    {
+        $sum = 0;
+        $count = 0;
+        if(count($this->grades)>0){
+            foreach ($this->grades as $grade) {
+                $sum += $grade->getLetterGrade();
+                $count++;
+            }
+        }
+        else return 0;
+        $this->gpa = $sum / $count;
+        return $this->gpa;
+    }
+
+    public function setGpa(float $gpa): self
+    {
+        $this->gpa = $gpa;
 
         return $this;
     }
