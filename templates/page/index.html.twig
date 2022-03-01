@@ -1,9 +1,41 @@
 {% extends 'page/header.html.twig' %}
-{% block title %}Hello PageController!
-{% endblock %}
 {% block body %}
-	<div class="container-fluid navBar">
-		<div class="row">
+	<style>
+		.row {
+			width: 100%;
+			min-height: 500px;
+		}
+		.widget {
+			width: 600px;
+			height: 200px;
+			padding: 0;
+			background-color: red;
+			border-radius: 60px;
+			overflow: hidden;
+		}
+
+		.widget img {
+			object-fit: contain;
+			border-radius: 60px;
+			width: 100%;
+			vertical-align: middle;
+			margin-top: -50px;
+
+		}
+		#first {}
+
+		#second {}
+	</style>
+	<div class="container-fluid">
+		<div class="row" id="first">
+			<div class="col">
+				<div class="widget">
+					<img src="https://c4.wallpaperflare.com/wallpaper/920/238/498/women-women-with-glasses-reading-books-wallpaper-preview.jpg" alt="">
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="row" id="second">
 			<div class="col"></div>
 		</div>
 	</div>

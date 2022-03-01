@@ -21,6 +21,7 @@ security:
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\UserAuthenticator
+            access_denied_handler: App\Security\AccessDeniedHandler
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -38,7 +39,8 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/staff, roles: ROLE_STAFF }
-
+        - { path: ^/teacher, roles: ROLE_TEACHER }
+        - { path: ^/std, roles: ROLE_STUDENT }
 when@test:
     security:
         password_hashers:

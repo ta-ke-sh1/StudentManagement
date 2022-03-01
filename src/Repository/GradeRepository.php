@@ -19,6 +19,55 @@ class GradeRepository extends ServiceEntityRepository
         parent::__construct($registry, Grade::class);
     }
 
+    /**
+     * @return Grade[] Returns an array of Grade objects
+     */
+    public function findStudentByClassAndStudentID($classID, $studentID)
+    {
+        return $this->createQueryBuilder('student')
+            ->andWhere('student.id = :val')
+            ->setParameter('val', $classID)
+            ->setParameter('val', $studentID)
+            ->orderBy('g.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Grade[] Returns an array of Grade objects
+     */
+    public function searchGrades($id)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT g
+            FROM App\Entity\Grade g
+            WHERE g.student = :id and g.numberGrade != 0
+            ORDER BY g.subject ASC'
+        )->setParameter('id', $id);
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
+    /**
+     * @return Grade[] Returns an array of Grade objects
+     */
+    public function searchOngoingClasses($id)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT g
+            FROM App\Entity\Grade g
+            WHERE g.student = :id and g.numberGrade = 0
+            ORDER BY g.subject ASC'
+        )->setParameter('id', $id);
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Grade[] Returns an array of Grade objects
     //  */

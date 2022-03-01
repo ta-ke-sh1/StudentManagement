@@ -23,9 +23,23 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $user->getAvatar();
+            $imgName = $user->getUserIdentifier();
+            $imgExtension = $image->guessExtension();
+            $imgName = $imgName . '.' . $imgExtension;
+            try {
+                $image->move(
+                    $this->getParameter('user_image'), // Tiep tuc edit trong services.yaml trong folder config
+                    $imgName
+                );
+            } catch (FileException $e) {
+                throw $e;
+            }
+
+            $user->setAvatar($imgName);
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasher->hashPassword(
+                $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
@@ -33,7 +47,6 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
             return $userAuthenticator->authenticateUser(
                 $user,

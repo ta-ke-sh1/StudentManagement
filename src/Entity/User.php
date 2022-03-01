@@ -29,6 +29,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $avatar;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $confirmPassword;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -113,14 +116,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getAvatar(): ?string
+    public function getAvatar()
     {
         return $this->avatar;
     }
 
-    public function setAvatar(string $avatar): self
+    public function setAvatar($avatar)
     {
-        $this->avatar = $avatar;
+        if ($avatar != null) {
+            $this->avatar = $avatar;
+        }
+        return $this;
+    }
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirmPassword;
+    }
+
+    public function setConfirmPassword(?string $confirmPassword): self
+    {
+        $this->confirmPassword = $confirmPassword;
 
         return $this;
     }

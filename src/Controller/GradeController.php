@@ -11,8 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/grade')]
 class GradeController extends AbstractController
 {
-    #[Route('/', name: 'grade_list')]
-    public function gradeList()
+    #[Route('/class/', name: 'grade_list')]
+    public function gradeList($classID)
     {
         $grades = $this->getDoctrine()->getRepository(Grade::class)->findAll();
         return $this->render('grade/index.html.twig', [
@@ -20,8 +20,8 @@ class GradeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'grade_index')]
-    public function gradeDetail($id)
+    #[Route('/student/{id}', name: 'student_grade_index')]
+    public function gradeStudent($id)
     {
         $grade = $this->getDoctrine()->getRepository(Grade::class)->find($id);
         if ($grade == null) {
@@ -31,21 +31,6 @@ class GradeController extends AbstractController
         return $this->render('grade/detail.html.twig', [
             'grade' => $grade,
         ]);
-    }
-
-    #[Route('/delete/{id}', name: 'grade_delete')]
-    public function gradeDelete($id)
-    {
-        $grade = $this->getDoctrine()->getRepository(Grade::class)->find($id);
-        if ($grade == null) {
-            $this->addFlash('error', "Grade does not exist!");
-            $this->redirectToRoute("grade_list");
-        } else {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->remove($grade);
-            $manager->flush();
-        }
-        return $this->redirectToRoute("grade_list");
     }
 
     #[Route('/add', name: 'grade_add')]

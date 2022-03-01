@@ -28,9 +28,6 @@ class Student
     #[ORM\Column(type: 'string', length: 255)]
     private $image;
 
-    #[ORM\OneToMany(mappedBy: 'student', targetEntity: Grade::class)]
-    private $grades;
-
     #[ORM\ManyToOne(targetEntity: ClassFGW::class, inversedBy: 'students')]
     private $classFGW;
 
@@ -140,18 +137,8 @@ class Student
         return $this;
     }
 
-    public function getGpa(Grade $grade): ?float
+    public function getGpa(): ?float
     {
-        $sum = 0;
-        $count = 0;
-        if(count($this->grades)>0){
-            foreach ($this->grades as $grade) {
-                $sum += $grade->getLetterGrade();
-                $count++;
-            }
-        }
-        else return 0;
-        $this->gpa = $sum / $count;
         return $this->gpa;
     }
 

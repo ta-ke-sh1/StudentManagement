@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Student;
 use App\Form\StudentType;
+use App\Repository\GradeRepository;
 use App\Repository\StudentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,13 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-// /**
-//  * @IsGranted("ROLE_ADMIN");
-//  */
+
 #[Route('/student')]
 class StudentController extends AbstractController
 {
-    
     #[Route('/', name: 'student_list')]
     public function studentList()
     {
@@ -75,18 +73,34 @@ class StudentController extends AbstractController
     }
 
     #[Route('/detail/{id}', name: 'student_detail')]
-    public function studentDetail($id)
+    public function studentDetail($id, GradeRepository $gradeRepository)
     {
         $student = $this->getDoctrine()->getRepository(Student::class)->find($id);
+        $grades = $gradeRepository->searchGrades($student->getId());
+        $ongoing = $gradeRepository->searchOngoingClasses($student->getId());
+        $sum = 0;
+        foreach ($grades as $g) {
+            $sum += $g->getNumberGrade();
+        }
+        if (count($grades) > 0) {
+            $gpa = $sum / count($grades);
+        } else $gpa = 0;
+
         if ($student == null) {
             $this->addFlash('error', "Student does not exist!");
             return $this->redirectToRoute("student_list");
         }
         return $this->render('student/detail.html.twig', [
             'student' => $student,
+            'grades' => $grades,
+            'ongoing' => $ongoing,
+            'gpa' => $gpa
         ]);
     }
 
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/delete/{id}', name: 'student_delete')]
     public function studentDelete($id)
     {
@@ -102,6 +116,9 @@ class StudentController extends AbstractController
         return $this->redirectToRoute("student_list");
     }
 
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add', name: 'student_add')]
     public function studentAdd(Request $request)
     {
@@ -153,6 +170,9 @@ class StudentController extends AbstractController
         }
     }
 
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/edit/{id}', name: 'student_edit')]
     public function studentEdit(Request $request, $id)
     {

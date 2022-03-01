@@ -1,7 +1,7 @@
 
 
 .tbl {
-    height: 680px;
+    min-height: 330px;
     overflow: scroll;
 }
 

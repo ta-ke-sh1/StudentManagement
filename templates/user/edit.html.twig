@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Register
+{% block title %} Edit
 {% endblock %}
 
 {% block body %}
@@ -123,15 +122,34 @@
 			<div class="col"></div>
 			<div class="col">
 				<div class="widget">
-					<h1>Register</h1> {{ form_start(registrationForm) }} 
-					{{ form_row(registrationForm.username) }}
-					{{ form_row(registrationForm.plainPassword)}}
-					{{ form_row(registrationForm.roles)}}
-					{{ form_row(registrationForm.avatar)}}
-					{{ form_row(registrationForm.agreeTerms) }}
-					<button type="submit" class="btn">Register</button> {{ form_end(registrationForm) }}
+					<h1>Register</h1> 
+                    {{ form_start(UserForm) }} 
+					{{ form_row(UserForm.avatar)}}
+					{{ form_row(UserForm.username) }}
+					{{ form_row(UserForm.confirmPassword)}}
+					<p class="rem">
+						<div class="round">
+							<input type="checkbox" id="checkbox" name="_remember_me"/>
+							<label for="checkbox"></label>
+							<span class="remember">Edit password?</span>
+						</div>
+					</p> 
+                    <div id="pwd">
+						{{ form_row(UserForm.plainPassword)}}
+                    </div>
+					<button	button type="submit" class="btn">Register</button> {{ form_end(UserForm) }}
 				</div>
 			</div>
 		</div>
 	</div>
+	<script>
+        function myFunction() {
+        var x = document.getElementById("pwd");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
 {% endblock %}

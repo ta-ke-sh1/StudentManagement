@@ -1,7 +1,6 @@
 {% extends 'student/header.html.twig' %}
 {% block title %}Students
 {% endblock %}
-{% block searchBar %}{% endblock %}
 {% block body %}
 	<label for="widget_student" class="wdgt">
 		<h2>Students</h2>
@@ -23,13 +22,13 @@
 						<input type="search" class="form-control" name="keyword" placeholder="Enter student name" required/>
 					</form>
 				</div>
-				{% if is_granted('ROLE_ADMIN') %}
-					<div class="col">
-						<a name="" id="addBtn" class="btn" href="{{ path('student_add') }}" role="button">
-							<span class="type" id="add">Add new Student</span>
-						</a>
-					</div>
-				{% endif %}
+				{# {% if is_granted('ROLE_ADMIN') %} #}
+				<div class="col">
+					<a name="" id="addBtn" class="btn" href="{{ path('student_add') }}" role="button">
+						<span class="type" id="add">Add new Student</span>
+					</a>
+				</div>
+				{# {% endif %} #}
 				<div class="col">
 					<span class="type">Sort by ID:</span>
 					<a name="" id="" class="btn" href="{{ path('student_id_asc') }}" role="button"><img src="{{ asset('icons/up.png') }}" width="20px" height="20px" alt=""/></a>
@@ -52,7 +51,6 @@
 						<th>Date of Birth</th>
 						<th>Major</th>
 						<th>Class</th>
-						<th>GPA</th>
 						<th>Image</th>
 						<th>Options</th>
 					</tr>
@@ -68,7 +66,6 @@
 								{% if student.classFGW %} {{ student.classFGW.name }}
 								{% endif %}
 							</td>
-							<td>{{ student.gpa }}</td>
 							<td>
 								<a href="{{ path('student_detail', { id: student.id }) }}">
 									<img src="{{ asset('students/' ~ student.image) }}" alt="" height="150px" width="auto" class="students"/>
@@ -83,6 +80,7 @@
 					{% endfor %}
 				</tbody>
 			</table>
-		</div>
+		</div>		
 	</div>
+<br><br><br>
 {% endblock %}

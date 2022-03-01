@@ -1,0 +1,76 @@
+{% extends 'user/header.html.twig' %}
+{% block body %}
+	<label for="widget_user" class="wdgt">
+		<h2>Users</h2>
+	</label>
+	<br/>
+	<div class="widget user_table" id="widget_user">
+		<div class="notifications">
+			{% for flash in app.flashes("Success") %}
+				<p class="alert alert-primary">{{ flash }}</p>
+			{% endfor %}
+			{% for flash in app.flashes("Error") %}
+				<p class="alert alert-danger">{{ flash }}</p>
+			{% endfor %}
+		</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col">
+					<form action="#" method="POST">
+						<input type="search" class="form-control" name="keyword" placeholder="Enter user name" required/>
+					</form>
+				</div>
+				<div class="col">
+					<a name="" id="addBtn" class="btn" href="{{ path('user_add') }}" role="button">
+						<span class="type" id="add">Add new User</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="tbl">
+			<table class="table" id="tbl">
+				<thead>
+					<tr id="head">
+						<th>ID</th>
+						<th>Name</th>
+						<th>Role</th>
+						<th>Avatar</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for user in users %}
+						<tr class="entire_row">
+							<td>{{ user.id }}</td>
+							<td>{{ user.username }}</td>
+							<td>
+								{% for role in user.roles %}
+									{% if role == "ROLE_ADMIN" %}
+										<p>Admin</p>
+									{% elseif role == "ROLE_STUDENT" %}
+										<p>Student</p>
+									{% elseif role == "ROLE_TEACHER" %}
+										<p>Teacher</p>
+									{% elseif role == "ROLE_STAFF" %}
+										<p>Staff</p>
+									{% endif %}
+								{% endfor %}
+							</td>
+							<td>
+								<a href="{{ path('user_detail', { id: user.id }) }}">
+									<img src="{{ asset('users/' ~ user.avatar) }}" alt="" height="150px" width="auto" class="users"/>
+								</a>
+							</td>
+							<td>
+								<a name="" id="edit" class="btn" href="{{ path('user_edit', { id: user.id }) }}" role="button">Edit</a>
+								<br/>
+								<a name="" id="delete" class="btn" href="{{ path('user_delete', { id: user.id }) }}" role="button" onclick="return confirm('Are you sure?')">Delete</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+{% endblock %}

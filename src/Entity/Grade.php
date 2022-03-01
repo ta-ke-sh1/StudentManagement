@@ -25,7 +25,7 @@ class Grade
     #[ORM\Column(type: 'string', length: 10)]
     private $letterGrade;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'float')]
     public $numberGrade;
 
     #[ORM\Column(type: 'string', length: 50)]
@@ -84,12 +84,12 @@ class Grade
         return $this;
     }
 
-    public function getNumberGrade(): ?int
+    public function getNumberGrade(): ?float
     {
         return $this->numberGrade;
     }
 
-    public function setNumberGrade(int $numberGrade): self
+    public function setNumberGrade(float $numberGrade): self
     {
         $this->numberGrade = $numberGrade;
 

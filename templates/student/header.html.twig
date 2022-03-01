@@ -7,10 +7,13 @@
 				<a href="{{ path('homepage') }}" class="nav_logo">
 					<img src="{{ asset('logo/logo_blue.png') }}" alt=""/>
 				</a>
-				<a href="#" class="nav_link">Profile</a>
-				<hr/>
-				<br/>
 				<div class="nav_list">
+					<hr/>
+					<br>
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('user_list') }}" class="nav_link">Users</a>
+					{% endif %}
+
 					<a href="{{ path('student_list') }}" class="nav_link active">
 						Students
 					</a>

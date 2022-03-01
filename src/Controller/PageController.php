@@ -14,10 +14,10 @@ class PageController extends AbstractController
         return $this->render('page/index.html.twig');
     }
 
-    #[Route('/login', name: 'login')]
+    #[Route('/guest', name: 'guest')]
     public function Login()
     {
-        return $this->render('page/login.html.twig');
+        return $this->render('page/guest_index.html.twig');
     }
 }
 

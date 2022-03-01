@@ -56,10 +56,10 @@ jQuery(document).ready(function () {
 
     // Button
     $(".btn").mouseenter(function () {
-        outer_cursor.css({ "mix-blend-mode": "difference", "background-color": "white" });
+        outer_cursor.css({ "mix-blend-mode": "difference", "background-color": "white", "border": "none" });
         cursor.css({ 'visibility': 'hidden' });
     }).mouseleave(function () {
-        outer_cursor.css({ "mix-blend-mode": "normal", "background-color": "transparent", transform: "scale(1)" });
+        outer_cursor.css({ "mix-blend-mode": "normal", "background-color": "transparent", transform: "scale(1)", "border": "solid 1px #2f1eb8" });
         cursor.css({ 'visibility': 'visible' });
     });
 
@@ -73,10 +73,10 @@ jQuery(document).ready(function () {
 
     // Image
     $(".students").mouseenter(function () {
-        outer_cursor.css({ "mix-blend-mode": "difference", "background-color": "white" });
+        outer_cursor.css({ "mix-blend-mode": "difference", "background-color": "white", "border": "none" });
         cursor.css({ 'visibility': 'hidden' });
     }).mouseleave(function () {
-        outer_cursor.css({ "mix-blend-mode": "normal", "background-color": "transparent", transform: "scale(1)" });
+        outer_cursor.css({ "mix-blend-mode": "normal", "background-color": "transparent", transform: "scale(1)", "border": "solid 1px #2f1eb8" });
         cursor.css({ 'visibility': 'visible' });
     });
 
@@ -85,6 +85,23 @@ jQuery(document).ready(function () {
     });
 
     $(".students").mouseleave(function () {
+        outer_cursor.css({ transform: "scale(1)" });
+    });
+
+    // Nav-link
+    $(".nav_link").mouseenter(function () {
+        outer_cursor.css({ "mix-blend-mode": "difference", "background-color": "white", "border": "none" });
+        cursor.css({ 'visibility': 'hidden' });
+    }).mouseleave(function () {
+        outer_cursor.css({ "mix-blend-mode": "normal", "background-color": "transparent", transform: "scale(1)", "border": "solid 1px #2f1eb8" });
+        cursor.css({ 'visibility': 'visible' });
+    });
+
+    $(".nav_link").hover(function () {
+        outer_cursor.css({ transform: "scale(2)" });
+    });
+
+    $(".nav_link").mouseleave(function () {
         outer_cursor.css({ transform: "scale(1)" });
     });
 });
