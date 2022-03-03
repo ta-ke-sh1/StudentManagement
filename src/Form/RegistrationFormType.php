@@ -38,14 +38,6 @@ class RegistrationFormType extends AbstractType
                     'class' => 'inp'
                 ]
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
             ->add('avatar', FileType::class, [
                 'data_class' => null,
                 'required' => is_null($builder->getData()->getAvatar()),
