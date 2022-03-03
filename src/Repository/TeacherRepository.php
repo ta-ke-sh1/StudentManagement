@@ -4,6 +4,11 @@ namespace App\Repository;
 
 use App\Entity\Teacher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+<<<<<<< HEAD
+=======
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+>>>>>>> abded5df1c386febe9fc225c49c9af88f6612365
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +24,33 @@ class TeacherRepository extends ServiceEntityRepository
         parent::__construct($registry, Teacher::class);
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function add(Teacher $entity, bool $flush = true): void
+    {
+        $this->_em->persist($entity);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
+    /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function remove(Teacher $entity, bool $flush = true): void
+    {
+        $this->_em->remove($entity);
+        if ($flush) {
+            $this->_em->flush();
+        }
+    }
+
+>>>>>>> abded5df1c386febe9fc225c49c9af88f6612365
     // /**
     //  * @return Teacher[] Returns an array of Teacher objects
     //  */

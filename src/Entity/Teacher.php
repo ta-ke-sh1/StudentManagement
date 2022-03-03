@@ -16,6 +16,21 @@ class Teacher
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
+<<<<<<< HEAD
+=======
+    #[ORM\Column(type: 'date')]
+    private $dob;
+
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    private $phone;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $address;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $email;
+
+>>>>>>> abded5df1c386febe9fc225c49c9af88f6612365
     public function getId(): ?int
     {
         return $this->id;
@@ -32,4 +47,55 @@ class Teacher
 
         return $this;
     }
+<<<<<<< HEAD
+=======
+
+    public function getDob(): ?\DateTimeInterface
+    {
+        return $this->dob;
+    }
+
+    public function setDob(\DateTimeInterface $dob): self
+    {
+        $this->dob = $dob;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+>>>>>>> abded5df1c386febe9fc225c49c9af88f6612365
 }
