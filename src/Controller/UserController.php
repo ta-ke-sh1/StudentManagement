@@ -82,10 +82,10 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'user_edit')]
+    #[Route('/edit/', name: 'user_edit')]
     public function userEdit(Request $request, $id)
     {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $user = $this->getUser();
         return $this->render('user/index.html.twig', [
             "user" => $user
         ]);
