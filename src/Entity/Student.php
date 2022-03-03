@@ -34,6 +34,9 @@ class Student
     #[ORM\Column(type: 'float')]
     private $gpa;
 
+    #[ORM\OneToOne(mappedBy: 'student', targetEntity: User::class, cascade: ['persist', 'remove'])]
+    private $user;
+
     public function __construct()
     {
         $this->grades = new ArrayCollection();
@@ -145,6 +148,28 @@ class Student
     public function setGpa(float $gpa): self
     {
         $this->gpa = $gpa;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setStudent(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getStudent() !== $this) {
+            $user->setStudent($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }

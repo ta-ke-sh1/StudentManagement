@@ -1,0 +1,78 @@
+{# áp dụng template của bootstrap vào form  #}
+
+{% form_theme StudentEditForm 'bootstrap_5_layout.html.twig' %}
+{# kế thừa file layout (template) #}
+{# override nội dung của phần body trong template #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Student
+{% endblock %}
+{% block sidebar %}
+	<!-- Sidebar -->
+	<div class="l-navbar" id="nav-bar">
+		<nav class="nav">
+			<div>
+				<a href="{{ path('homepage') }}" class="nav_logo">
+					<img src="{{ asset('logo/logo_blue.png') }}" alt=""/>
+				</a>
+				<div class="nav_list">
+					<hr/>
+					<br>
+					<img src="{{ asset('students/' ~ student.image) }}" class="avatar" alt=""/>
+					<br>
+					<br>
+					<a href="{{ path('student_self_edit') }}" class="nav_link active">
+						Edit
+					</a>
+				</a>
+				<hr id="btmline"/>
+			</div>
+		</div>
+		<a href="{{ path('app_logout') }}" class="nav_link">Log Out</a>
+	</nav>
+</div>{% endblock %}
+
+	{% block body %}
+		<style>
+         .avatar {
+		width: 80px;
+		height: 80px;
+		border-radius: 40px;
+		margin-left: 8px;w
+	}
+.currentImage {
+	width: auto;
+	height: 400px;
+	border-radius: 40px;
+	margin-left: 70px;
+}
+
+.widget {
+	box-shadow: none;
+	padding: 40px;
+	transition-duration: 0.5s;
+	margin-bottom: 50px;
+	min-height: 320px;
+   margin-top: 140px;
+}
+
+.widget:hover {
+	box-shadow: rgba(0, 0, 0, 0.1) 0 20px 25px -5px, rgba(0, 0, 0, 0.04) 0 10px 10px -5px;
+	z-index: 100;
+}
+
+.container {
+	margin-left: 10%;
+}
+	</style>
+		<div class="container"> <div class="widget">
+			<div class="col">
+				<div class="container col-md-4 text-center form"> {{ form (StudentEditForm) }}
+					</div>
+				</div>
+				<div class="col">
+					<img src="{{ asset('students/' ~ student.image) }}" class="currentImage" alt=""/>
+				</div>
+			</div>
+		</div>
+	{% endblock %}

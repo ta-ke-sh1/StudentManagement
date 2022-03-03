@@ -35,14 +35,6 @@ class UserFGWType extends AbstractType
                     'class' => 'inp'
                 ]
             ])
-            ->add('avatar', FileType::class, [
-                'data_class' => null,
-                'required' => is_null($builder->getData()->getAvatar()),
-                'attr' => [
-                    'id' => 'saveBtn',
-                    'class' => 'inp'
-                ]
-            ])
             ->add('confirmPassword', PasswordType::class, [
                 'required' => true,
                 'attr' => [

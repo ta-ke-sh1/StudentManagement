@@ -32,6 +32,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $confirmPassword;
 
+    #[ORM\OneToOne(inversedBy: 'user', targetEntity: Student::class, cascade: ['persist', 'remove'])]
+    private $student;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -137,6 +140,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConfirmPassword(?string $confirmPassword): self
     {
         $this->confirmPassword = $confirmPassword;
+
+        return $this;
+    }
+
+    public function getStudent(): ?Student
+    {
+        return $this->student;
+    }
+
+    public function setStudent(?Student $student): self
+    {
+        $this->student = $student;
 
         return $this;
     }

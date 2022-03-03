@@ -63,7 +63,7 @@ class StudentController extends AbstractController
         ]);
     }
 
-    #[Route('/name/descending', name: 'student_name_desc')]
+    #[Route('/name/desc', name: 'student_name_desc')]
     public function studentSortNameDesc(StudentRepository $studentRepository)
     {
         $students = $studentRepository->sortByNameDesc();

@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserFGWType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /** 
  * @IsGranted("ROLE_ADMIN")
@@ -24,6 +25,33 @@ class UserController extends AbstractController
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         return $this->render('user/index.html.twig', [
             "users" => $users
+        ]);
+    }
+    #[Route('/id/asc', name: 'user_id_asc')]
+    public function userSortIdAsc(UserRepository $userRepository)
+    {
+        $users = $userRepository->sortByIDAsc();
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
+    #[Route('/search', name: 'user_search')]
+    public function userSearch(Request $request, UserRepository $userRepository)
+    {
+        $keyword = $request->get("keyword");
+        $users = $userRepository->searchUser($keyword);
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
+    #[Route('/id/desc', name: 'user_id_desc')]
+    public function userSortIdDesc(UserRepository $userRepository)
+    {
+        $users = $userRepository->sortByIDDesc();
+        return $this->render('user/index.html.twig', [
+            'users' => $users,
         ]);
     }
 

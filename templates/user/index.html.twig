@@ -16,7 +16,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col">
-					<form action="#" method="POST">
+					<form action="{{ path('user_search') }}" method="POST">
 						<input type="search" class="form-control" name="keyword" placeholder="Enter user name" required/>
 					</form>
 				</div>
@@ -25,6 +25,12 @@
 						<span class="type" id="add">Add new User</span>
 					</a>
 				</div>
+				<div class="col">
+					<span class="type">Sort by ID:</span>
+					<a name="" id="" class="btn" href="{{ path('user_id_asc') }}" role="button"><img src="{{ asset('icons/up.png') }}" width="20px" height="20px" alt=""/></a>
+					<a name="" id="" class="btn" href="{{ path('user_id_desc') }}" role="button"><img src="{{ asset('icons/down.png') }}" width="20px" height="20px" alt=""/></a>
+				</div>
+				<div class="col"></div>
 			</div>
 		</div>
 		<div class="tbl">

@@ -23,15 +23,21 @@
 			margin-bottom: 0;
 		}
 
+		.widget table{
+			overflow: scroll;
+		}
+
+
 		.table #tbl {
 			margin-bottom: 30px;
 		}
 
 		.widget {
 			box-shadow: none;
-			padding: 30px;
+			padding: 40px;
 			transition-duration: 0.5s;
-			margin-bottom: 20px;
+			margin-bottom: 50px;
+			min-height: 360px;
 		}
 
 		#grades {
@@ -51,78 +57,92 @@
 		#personalImg {
 			width: fit-content;
 		}
+
+		.stdPic {
+			margin-top: 10px;
+			border-radius: 40px;
+		}
 	</style>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col">
-				<div class="widget">
-					<div class="row">
-						<div class="col">
-							<table class="personal">
-								<h1>{{ student.name }}</h1>
-								<tr>
-									<td>Major</td>
-									<td>:</td>
-									<td>{{ student.major }}</td>
-								</tr>
-								{% if student.classFGW %}
-									<tr>
-										<td>Class</td>
-										<td>:</td>
-										<td>{{ student.classFGW.name }}</td>
-									</tr>
-								{% endif %}
-								<tr>
-									<td>Date of Birth</td>
-									<td>:</td>
-									<td>{{ student.dob | date('d-m-Y') }}</td>
-								</tr>
-								<tr>
-									<td>GPA</td>
-									<td>:</td>
-									<td>{{ gpa }}</td>
-								</tr>
-							</table>
-						</div>
-						<div class="col">
-							<img src="{{ asset("students/{{student.image}}")}}" alt="">
-						</div>
-					</div>
-				</div>
-				<div class="widget">
-					<h1>Current Classes</h1>
-					<div class="tbl">
-						<table class="table" id="tbl">
-							<thead>
-								<tr id="head">
-									<th>Subject ID</th>
-									<th>Subject Name</th>
-									<th>Class</th>
-									<th>Semester</th>
-									{% if is_granted('ROLE_ADMIN') %}
-										<th>Option</th>
-									{% endif %}
-								</tr>
-							</thead>
-							<tbody>
-								{% for class in ongoing %}
-									<tr class="entire_row">
-										<td>{{ class.subject.id }}</td>
-										<td>{{ class.subject.name }}</td>
-										<td>{{ class.classFGW.name }}</td>
-										<td>{{ class.semester }}</td>
-										{% if is_granted('ROLE_ADMIN') %}
-											<td>
-												<a name="" id="edit" class="btn" href="#" role="button">Edit</a>
-											</td>
+				<div class="row">
+					<div class="col">
+						<div class="widget" id="widget2">
+							<div class="row">
+								<div class="col" id="personal">
+									<table class="personal">
+										<h1>{{ student.name }}</h1>
+										<tr>
+											<td>Major</td>
+											<td>:</td>
+											<td>{{ student.major }}</td>
+										</tr>
+										{% if student.classFGW %}
+											<tr>
+												<td>Class</td>
+												<td>:</td>
+												<td>{{ student.classFGW.name }}</td>
+											</tr>
 										{% endif %}
-									</tr>
-								{% endfor %}
-							</tbody>
-						</table>
+										<tr>
+											<td>Date of Birth</td>
+											<td>:</td>
+											<td>{{ student.dob | date('d-m-Y') }}</td>
+										</tr>
+										<tr>
+											<td>GPA</td>
+											<td>:</td>
+											<td>{{ gpa }}</td>
+										</tr>
+									</table>
+								</div>
+								<div class="col">
+									<img src="{{ asset('students/' ~ student.image) }}" height="220px" alt="" class="stdPic">
+								</div>
+							</div>
+						</div>
 					</div>
 
+					<div class="col">
+						<div class="widget">
+							<h1>Ongoing Classes</h1>
+							<div class="tbl">
+								<table class="table" id="tbl">
+									<thead>
+										<tr id="head">
+											<th>Subject ID</th>
+											<th>Subject Name</th>
+											<th>Class</th>
+											<th>Semester</th>
+											{% if is_granted('ROLE_ADMIN') %}
+												<th>Option</th>
+											{% endif %}
+										</tr>
+									</thead>
+									<tbody>
+										{% for class in ongoing %}
+											<tr class="entire_row">
+												<td>{{ class.subject.id }}</td>
+												<td>{{ class.subject.name }}</td>
+												<td>{{ class.classFGW.name }}</td>
+												<td>{{ class.semester }}</td>
+												{% if is_granted('ROLE_ADMIN') %}
+													<td>
+														<a name="" id="edit" class="btn" href="#" role="button">Edit</a>
+														<br>
+														<a name="" id="delete" class="btn" href="#" role="button">Delete</a>
+													</td>
+												{% endif %}
+											</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
+
 				<div class="widget">
 					<h1>Grades</h1>
 					<div class="tbl">
@@ -152,6 +172,8 @@
 										{% if is_granted('ROLE_ADMIN') %}
 											<td>
 												<a name="" id="edit" class="btn" href="#" role="button">Edit</a>
+												<br>
+												<a name="" id="delete" class="btn" href="#" role="button">Delete</a>
 											</td>
 										{% endif %}
 									</tr>
@@ -166,7 +188,6 @@
 	<br><br>
 	<div class="row">
 		<div class="col">
-
 			<div class="col"></div>
 		</div>
 		<br><br>
