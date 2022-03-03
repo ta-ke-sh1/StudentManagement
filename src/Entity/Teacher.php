@@ -16,8 +16,6 @@ class Teacher
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-<<<<<<< HEAD
-=======
     #[ORM\Column(type: 'date')]
     private $dob;
 
@@ -30,7 +28,6 @@ class Teacher
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $email;
 
->>>>>>> abded5df1c386febe9fc225c49c9af88f6612365
     public function getId(): ?int
     {
         return $this->id;
@@ -47,8 +44,6 @@ class Teacher
 
         return $this;
     }
-<<<<<<< HEAD
-=======
 
     public function getDob(): ?\DateTimeInterface
     {
@@ -97,5 +92,4 @@ class Teacher
 
         return $this;
     }
->>>>>>> abded5df1c386febe9fc225c49c9af88f6612365
 }
