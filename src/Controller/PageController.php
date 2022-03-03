@@ -19,7 +19,7 @@ class PageController extends AbstractController
         if ($roles != null) {
             if (in_array('ROLE_STUDENT', $roles)) {
                 return $this->redirectToRoute('student_role_view');
-            }} 
+            }
         }
         return $this->render('page/index.html.twig');
     }
