@@ -2,35 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\Teacher;
+use App\Entity\SubjectSchedule;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-<<<<<<< HEAD
-=======
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
->>>>>>> abded5df1c386febe9fc225c49c9af88f6612365
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Teacher|null find($id, $lockMode = null, $lockVersion = null)
- * @method Teacher|null findOneBy(array $criteria, array $orderBy = null)
- * @method Teacher[]    findAll()
- * @method Teacher[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method SubjectSchedule|null find($id, $lockMode = null, $lockVersion = null)
+ * @method SubjectSchedule|null findOneBy(array $criteria, array $orderBy = null)
+ * @method SubjectSchedule[]    findAll()
+ * @method SubjectSchedule[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TeacherRepository extends ServiceEntityRepository
+class SubjectScheduleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Teacher::class);
+        parent::__construct($registry, SubjectSchedule::class);
     }
 
-<<<<<<< HEAD
-=======
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Teacher $entity, bool $flush = true): void
+    public function add(SubjectSchedule $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -42,7 +37,7 @@ class TeacherRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Teacher $entity, bool $flush = true): void
+    public function remove(SubjectSchedule $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -50,17 +45,16 @@ class TeacherRepository extends ServiceEntityRepository
         }
     }
 
->>>>>>> abded5df1c386febe9fc225c49c9af88f6612365
     // /**
-    //  * @return Teacher[] Returns an array of Teacher objects
+    //  * @return SubjectSchedule[] Returns an array of SubjectSchedule objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
+            ->orderBy('s.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -69,10 +63,10 @@ class TeacherRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Teacher
+    public function findOneBySomeField($value): ?SubjectSchedule
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

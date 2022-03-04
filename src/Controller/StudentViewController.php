@@ -10,14 +10,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class StudentViewController extends AbstractController
 {
     #[Route('/student/homepage', name: 'student_role_view')]
-    public function studentRoleView(GradeRepository $gradeRepository)
+    public function studentRoleView(AuthenticationUtils $authenticationUtils, GradeRepository $gradeRepository)
     {
         $user = $this->getUser();
-        $student = $this->getDoctrine()->getRepository(Student::class)->find($user->getStudent()->getId());
+        if ($user->getStudent() == null) {
+            $this->addFlash("Error", "Unlinked account, please contact admin!");
+            return $this->redirectToRoute("app_login");
+        } else $student = $this->getDoctrine()->getRepository(Student::class)->find($user->getStudent()->getId());
+
         $ongoing = $gradeRepository->searchOngoingClasses($student->getId());
         $grades = $gradeRepository->searchGrades($student->getId());
         $sum = 0;
@@ -29,7 +34,7 @@ class StudentViewController extends AbstractController
             $gpa = $sum / count($grades);
         } else $gpa = 0;
 
-        return $this->render('student_view/index.html.twig', [
+        return $this->render('student/detail.html.twig', [
             'student' => $student,
             'grades' => $grades,
             'ongoing' => $ongoing,

@@ -37,9 +37,13 @@ class Student
     #[ORM\OneToOne(mappedBy: 'student', targetEntity: User::class, cascade: ['persist', 'remove'])]
     private $user;
 
+    #[ORM\OneToMany(mappedBy: 'student', targetEntity: SubjectSchedule::class)]
+    private $subjectSchedules;
+
     public function __construct()
     {
         $this->grades = new ArrayCollection();
+        $this->subjectSchedules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -170,6 +174,36 @@ class Student
         }
 
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SubjectSchedule>
+     */
+    public function getSubjectSchedules(): Collection
+    {
+        return $this->subjectSchedules;
+    }
+
+    public function addSubjectSchedule(SubjectSchedule $subjectSchedule): self
+    {
+        if (!$this->subjectSchedules->contains($subjectSchedule)) {
+            $this->subjectSchedules[] = $subjectSchedule;
+            $subjectSchedule->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubjectSchedule(SubjectSchedule $subjectSchedule): self
+    {
+        if ($this->subjectSchedules->removeElement($subjectSchedule)) {
+            // set the owning side to null (unless already changed)
+            if ($subjectSchedule->getStudent() === $this) {
+                $subjectSchedule->setStudent(null);
+            }
+        }
 
         return $this;
     }

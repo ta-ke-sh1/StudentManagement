@@ -27,11 +27,15 @@ class ClassFGW
     #[ORM\OneToMany(mappedBy: 'classFGW', targetEntity: Student::class)]
     private $students;
 
+    #[ORM\OneToMany(mappedBy: 'class', targetEntity: SubjectSchedule::class)]
+    private $subjectSchedules;
+
     public function __construct()
     {
         $this->subjects = new ArrayCollection();
         $this->grades = new ArrayCollection();
         $this->students = new ArrayCollection();
+        $this->subjectSchedules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,6 +133,36 @@ class ClassFGW
             // set the owning side to null (unless already changed)
             if ($student->getClassFGW() === $this) {
                 $student->setClassFGW(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SubjectSchedule>
+     */
+    public function getSubjectSchedules(): Collection
+    {
+        return $this->subjectSchedules;
+    }
+
+    public function addSubjectSchedule(SubjectSchedule $subjectSchedule): self
+    {
+        if (!$this->subjectSchedules->contains($subjectSchedule)) {
+            $this->subjectSchedules[] = $subjectSchedule;
+            $subjectSchedule->setClass($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubjectSchedule(SubjectSchedule $subjectSchedule): self
+    {
+        if ($this->subjectSchedules->removeElement($subjectSchedule)) {
+            // set the owning side to null (unless already changed)
+            if ($subjectSchedule->getClass() === $this) {
+                $subjectSchedule->setClass(null);
             }
         }
 
