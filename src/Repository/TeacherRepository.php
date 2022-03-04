@@ -4,8 +4,11 @@ namespace App\Repository;
 
 use App\Entity\Teacher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+<<<<<<< HEAD
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+=======
+>>>>>>> 9bdfc28bf9668fca56ed27b13668b08004cc1a50
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -22,27 +25,60 @@ class TeacherRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @return Teacher[] Returns an array of Teacher objects
      */
-    public function add(Teacher $entity, bool $flush = true): void
+    public function sortByIDAsc()
     {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        return $this->createQueryBuilder('teacher')
+            ->orderBy('teacher.id', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @return Teacher[] Returns an array of Teacher objects
      */
-    public function remove(Teacher $entity, bool $flush = true): void
+    public function sortByIDDesc()
     {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
+        return $this->createQueryBuilder('teacher')
+            ->orderBy('teacher.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Teacher[] Returns an array of Teacher objects
+     */
+    public function sortByNameAsc()
+    {
+        return $this->createQueryBuilder('teacher')
+            ->orderBy('teacher.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Teacher[] Returns an array of Teacher objects
+     */
+    public function sortByNameDesc()
+    {
+        return $this->createQueryBuilder('teacher')
+            ->orderBy('teacher.name', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Teacher[] Returns an array of Teacher objects
+     */
+    public function searchTeacher($keyword)
+    {
+        return $this->createQueryBuilder('teacher')
+            ->andWhere('teacher.name LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->orderBy('teacher.name', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     // /**

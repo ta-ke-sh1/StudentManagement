@@ -16,11 +16,6 @@
 					<img src="{{ asset('logo/logo_blue.png') }}" alt=""/>
 				</a>
 				<div class="nav_list">
-					<hr>
-					<br>
-					<a href="{{ path('user_edit') }}">
-						<img src="{{ asset('users/' ~ user.avatar) }}" class="avatar" alt=""/>
-					</a>
 					<hr/>
 					<br>
 					<a href="{{ path('user_edit') }}" class="nav_link active">
@@ -30,20 +25,10 @@
 					<br>
 					{% if is_granted('ROLE_ADMIN') %}
 						<a href="{{ path('user_list') }}" class="nav_link">Users</a>
-<<<<<<< HEAD
-=======
-						<a href="{{ path('student_list') }}" class="nav_link active">
-							Students
-						</a>
 						<a href="{{ path('teacher_list') }}" class="nav_link active">
 							Teachers
 						</a>
->>>>>>> 9bdfc28bf9668fca56ed27b13668b08004cc1a50
 					{% endif %}
-
-					<a href="{{ path('student_list') }}" class="nav_link active">
-						Students
-					</a>
 					<a href="{{ path('classFGW_list') }}" class="nav_link">
 						Class
 					</a>

@@ -1,0 +1,110 @@
+{% extends 'teacher/header.html.twig' %}
+{% block body %}
+	<style>
+		.personal .spn img {
+			height: 400px;
+			width: auto;
+			border-radius: 30px;
+			margin: 12px 0 12px 12px;
+		}
+
+		.personal .spn {
+			width: 40%;
+		}
+
+		.widget:hover {
+			box-shadow: rgba(0, 0, 0, 0.1) 0 20px 25px -5px, rgba(0, 0, 0, 0.04) 0 10px 10px -5px;
+			z-index: 100;
+		}
+
+		.tbl {
+			min-height: 130px;
+			overflow: scroll;
+			margin-bottom: 0;
+		}
+
+		.widget table{
+			overflow: scroll;
+		}
+
+
+		.table #tbl {
+			margin-bottom: 30px;
+		}
+
+		.widget {
+			box-shadow: none;
+			padding: 40px;
+			transition-duration: 0.5s;
+			margin-bottom: 50px;
+			min-height: 360px;
+		}
+
+		#grades {
+			padding: 20px;
+			margin-right: 150px;
+		}
+
+		p {
+			font-size: 20px;
+		}
+
+		.personal td {
+			padding: 10px 20px 10px 0;
+			text-align: left;
+		}
+
+		#personalImg {
+			width: fit-content;
+		}
+
+		.stdPic {
+			margin-top: 10px;
+			border-radius: 40px;
+		}
+	</style>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col">
+				<div class="row">
+					<div class="col">
+						<div class="widget" id="widget2">
+							<div class="row">
+								<div class="col" id="personal">
+									<table class="personal">
+										<h1>{{ teacher.name }}</h1>
+										<tr>
+											<td>Phone</td>
+											<td>:</td>
+											<td>{{ teacher.phone }}</td>
+										</tr>
+												<td>Address</td>
+												<td>:</td>
+												<td>{{ teacher.address }}</td>
+										<tr>
+											<td>Date of Birth</td>
+											<td>:</td>
+											<td>{{ teacher.dob | date('d-m-Y') }}</td>
+										</tr>
+										<tr>
+											<td>Email</td>
+											<td>:</td>
+											<td>{{ teacher.email }}</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><br>
+	<div class="row">
+		<div class="col">
+			<div class="col"></div>
+		</div>
+		<br><br>
+	</div>
+{% endblock %}

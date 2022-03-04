@@ -37,12 +37,18 @@ class Student
     #[ORM\OneToOne(mappedBy: 'student', targetEntity: User::class, cascade: ['persist', 'remove'])]
     private $user;
 
+<<<<<<< HEAD
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $avatar;
+=======
+    #[ORM\OneToMany(mappedBy: 'student', targetEntity: SubjectSchedule::class)]
+    private $subjectSchedules;
+>>>>>>> 9bdfc28bf9668fca56ed27b13668b08004cc1a50
 
     public function __construct()
     {
         $this->grades = new ArrayCollection();
+        $this->subjectSchedules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +183,7 @@ class Student
         return $this;
     }
 
+<<<<<<< HEAD
     public function getAvatar(): ?string
     {
         return $this->avatar;
@@ -185,6 +192,34 @@ class Student
     public function setAvatar(?string $avatar): self
     {
         $this->avatar = $avatar;
+=======
+    /**
+     * @return Collection<int, SubjectSchedule>
+     */
+    public function getSubjectSchedules(): Collection
+    {
+        return $this->subjectSchedules;
+    }
+
+    public function addSubjectSchedule(SubjectSchedule $subjectSchedule): self
+    {
+        if (!$this->subjectSchedules->contains($subjectSchedule)) {
+            $this->subjectSchedules[] = $subjectSchedule;
+            $subjectSchedule->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubjectSchedule(SubjectSchedule $subjectSchedule): self
+    {
+        if ($this->subjectSchedules->removeElement($subjectSchedule)) {
+            // set the owning side to null (unless already changed)
+            if ($subjectSchedule->getStudent() === $this) {
+                $subjectSchedule->setStudent(null);
+            }
+        }
+>>>>>>> 9bdfc28bf9668fca56ed27b13668b08004cc1a50
 
         return $this;
     }
