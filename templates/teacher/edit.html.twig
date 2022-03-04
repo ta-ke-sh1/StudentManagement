@@ -1,0 +1,12 @@
+{# áp dụng template của bootstrap vào form  #}
+{%
+    extends "teacher/index.html.twig" %}
+    {% form_theme TeacherForm 'bootstrap_5_layout.html.twig' %}
+    {# kế thừa file layout (template) #}
+    {# override nội dung của phần body trong template #}
+    {% block body %}
+    <div class="container col-md-4 mt-4 text-center">
+       <h2 class="text text-primary">Edit Teacher Information</h2>
+       {{ form (TeacherForm) }}
+    </div>
+    {% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block sidebar %}
+	<style>
+		.avatar {
+			width: 80px;
+			height: 80px;
+			border-radius: 40px;
+			margin-left: 8px;w
+		}
+	</style>
+	<!-- Sidebar -->
+	<div class="l-navbar" id="nav-bar">
+		<nav class="nav">
+			<div>
+				<a href="{{ path('homepage') }}" class="nav_logo">
+					<img src="{{ asset('logo/logo_blue.png') }}" alt=""/>
+				</a>
+				<div class="nav_list">
+					<hr/>
+					<br>
+					<a href="{{ path('user_edit') }}" class="nav_link active">
+						Edit
+					</a>
+					<hr/>
+					<br>
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('user_list') }}" class="nav_link">Users</a>
+						<a href="{{ path('teacher_list') }}" class="nav_link active">
+							Teachers
+						</a>
+					{% endif %}
+					<a href="{{ path('classFGW_list') }}" class="nav_link">
+						Class
+					</a>
+					<a href="{{ path('subject_list') }}" class="nav_link">
+						Subject
+					</a>
+					<hr id="btmline"/>
+				</div>
+			</div>
+			<a href="{{ path('app_logout') }}" class="nav_link">Log Out</a>
+		</nav>
+	</div>
+	<!-- Sidebar -->
+{% endblock %}
