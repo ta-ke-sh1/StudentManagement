@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TeacherRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TeacherRepository::class)]
@@ -27,6 +29,14 @@ class Teacher
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $email;
+
+    #[ORM\OneToMany(mappedBy: 'teacher', targetEntity: SubjectSchedule::class)]
+    private $subjectSchedules;
+
+    public function __construct()
+    {
+        $this->subjectSchedules = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +99,36 @@ class Teacher
     public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SubjectSchedule>
+     */
+    public function getSubjectSchedules(): Collection
+    {
+        return $this->subjectSchedules;
+    }
+
+    public function addSubjectSchedule(SubjectSchedule $subjectSchedule): self
+    {
+        if (!$this->subjectSchedules->contains($subjectSchedule)) {
+            $this->subjectSchedules[] = $subjectSchedule;
+            $subjectSchedule->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubjectSchedule(SubjectSchedule $subjectSchedule): self
+    {
+        if ($this->subjectSchedules->removeElement($subjectSchedule)) {
+            // set the owning side to null (unless already changed)
+            if ($subjectSchedule->getTeacher() === $this) {
+                $subjectSchedule->setTeacher(null);
+            }
+        }
 
         return $this;
     }

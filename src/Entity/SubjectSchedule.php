@@ -28,6 +28,9 @@ class SubjectSchedule
     #[ORM\ManyToOne(targetEntity: ClassFGW::class, inversedBy: 'subjectSchedules')]
     private $class;
 
+    #[ORM\ManyToOne(targetEntity: Teacher::class, inversedBy: 'subjectSchedules')]
+    private $teacher;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class SubjectSchedule
     public function setClass(?ClassFGW $class): self
     {
         $this->class = $class;
+
+        return $this;
+    }
+
+    public function getTeacher(): ?Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?Teacher $teacher): self
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }
