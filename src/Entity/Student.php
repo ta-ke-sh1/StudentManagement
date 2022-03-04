@@ -37,6 +37,9 @@ class Student
     #[ORM\OneToOne(mappedBy: 'student', targetEntity: User::class, cascade: ['persist', 'remove'])]
     private $user;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $avatar;
+
     public function __construct()
     {
         $this->grades = new ArrayCollection();
@@ -170,6 +173,18 @@ class Student
         }
 
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

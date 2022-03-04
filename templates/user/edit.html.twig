@@ -1,4 +1,8 @@
-{% extends 'base.html.twig' %}
+{% form_theme StudentForm 'bootstrap_5_layout.html.twig' %}
+{# kế thừa file layout (template) #}
+{%
+extends "user/header.html.twig" %}
+
 {% block title %} Edit
 {% endblock %}
 
@@ -122,7 +126,6 @@
 			<div class="col"></div>
 			<div class="col">
 				<div class="widget">
-					<h1>Register</h1> 
                     {{ form_start(UserForm) }} 
 					{{ form_row(UserForm.avatar)}}
 					{{ form_row(UserForm.username) }}
@@ -137,7 +140,7 @@
                     <div id="pwd">
 						{{ form_row(UserForm.plainPassword)}}
                     </div>
-					<button	button type="submit" class="btn">Register</button> {{ form_end(UserForm) }}
+					<button	button type="submit" class="btn">Edit</button> {{ form_end(UserForm) }}
 				</div>
 			</div>
 		</div>

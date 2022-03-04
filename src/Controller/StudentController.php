@@ -20,61 +20,74 @@ class StudentController extends AbstractController
     #[Route('/', name: 'student_list')]
     public function studentList()
     {
+        $user = $this->getUser();
         $students = $this->getDoctrine()->getRepository(Student::class)->findAll();
         return $this->render('student/index.html.twig', [
             'students' => $students,
+            'user' => $user
         ]);
     }
 
     #[Route('/search', name: 'student_search')]
     public function studentSearch(Request $request, StudentRepository $studentRepository)
     {
+        $user = $this->getUser();
         $keyword = $request->get("keyword");
         $students = $studentRepository->searchStudent($keyword);
         return $this->render('student/index.html.twig', [
             'students' => $students,
+            'user' => $user
         ]);
     }
 
     #[Route('/id/asc', name: 'student_id_asc')]
     public function studentSortIdAsc(StudentRepository $studentRepository)
     {
+        $user = $this->getUser();
         $students = $studentRepository->sortByIDAsc();
         return $this->render('student/index.html.twig', [
             'students' => $students,
+            'user' => $user
         ]);
     }
 
     #[Route('/id/desc', name: 'student_id_desc')]
     public function studentSortIdDesc(StudentRepository $studentRepository)
     {
+        $user = $this->getUser();
         $students = $studentRepository->sortByIDDesc();
         return $this->render('student/index.html.twig', [
             'students' => $students,
+            'user' =>  $user
         ]);
     }
 
     #[Route('/name/asc', name: 'student_name_asc')]
     public function studentSortNameAsc(StudentRepository $studentRepository)
     {
+        $user = $this->getUser();
         $students = $studentRepository->sortByNameAsc();
         return $this->render('student/index.html.twig', [
             'students' => $students,
+            'user' => $user
         ]);
     }
 
     #[Route('/name/desc', name: 'student_name_desc')]
     public function studentSortNameDesc(StudentRepository $studentRepository)
     {
+        $user = $this->getUser();
         $students = $studentRepository->sortByNameDesc();
         return $this->render('student/index.html.twig', [
             'students' => $students,
+            'user' => $user
         ]);
     }
 
     #[Route('/detail/{id}', name: 'student_detail')]
     public function studentDetail($id, GradeRepository $gradeRepository)
     {
+        $user = $this->getUser();
         $student = $this->getDoctrine()->getRepository(Student::class)->find($id);
         $grades = $gradeRepository->searchGrades($student->getId());
         $ongoing = $gradeRepository->searchOngoingClasses($student->getId());
@@ -94,7 +107,8 @@ class StudentController extends AbstractController
             'student' => $student,
             'grades' => $grades,
             'ongoing' => $ongoing,
-            'gpa' => $gpa
+            'gpa' => $gpa,
+            'user' => $user
         ]);
     }
 
@@ -122,6 +136,7 @@ class StudentController extends AbstractController
     #[Route('/add', name: 'student_add')]
     public function studentAdd(Request $request)
     {
+        $user = $this->getUser();
         $student = new Student;
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
@@ -165,7 +180,8 @@ class StudentController extends AbstractController
             return $this->redirectToRoute("student_list");
         } else {
             return $this->renderForm("student/add.html.twig", [
-                'StudentForm' => $form
+                'StudentForm' => $form,
+                'user' => $user
             ]);
         }
     }
@@ -176,6 +192,7 @@ class StudentController extends AbstractController
     #[Route('/edit/{id}', name: 'student_edit')]
     public function studentEdit(Request $request, $id)
     {
+        $user = $this->getUser();
         $student = $this->getDoctrine()->getRepository(Student::class)->find($id);
         $form = $this->createForm(StudentType::class, $student);
         $form->handleRequest($request);
@@ -197,9 +214,11 @@ class StudentController extends AbstractController
                     $prefix = "GMH";
                 }
                 $id = uniqid();
+
                 $imgName = $student->getName() . $prefix . $id;
                 $imgExtension = $image->guessExtension();
                 $imgName = $imgName . '.' . $imgExtension;
+
                 try {
                     $image->move(
                         $this->getParameter('student_image'), // Tiep tuc edit trong services.yaml trong folder config
@@ -213,11 +232,13 @@ class StudentController extends AbstractController
 
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($student);
+            $manager->persist($user);
             $manager->flush();
             return $this->redirectToRoute("student_list");
         } else {
             return $this->renderForm("student/edit.html.twig", [
-                'StudentForm' => $form
+                'StudentForm' => $form,
+                'user' => $user
             ]);
         }
     }
