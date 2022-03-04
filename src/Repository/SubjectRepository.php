@@ -19,6 +19,63 @@ class SubjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Subject::class);
     }
 
+    /**
+     * @return Subject[] Returns an array of Subject objects
+     */
+    public function sortByIDAsc()
+    {
+        return $this->createQueryBuilder('subject')
+            ->orderBy('subject.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Subject[] Returns an array of Student objects
+     */
+    public function sortByIDDesc()
+    {
+        return $this->createQueryBuilder('subject')
+            ->orderBy('subject.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Subject[] Returns an array of Subject objects
+     */
+    public function sortByNameAsc()
+    {
+        return $this->createQueryBuilder('subject')
+            ->orderBy('subject.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Subject[] Returns an array of Subject objects
+     */
+    public function sortByNameDesc()
+    {
+        return $this->createQueryBuilder('subject')
+            ->orderBy('subject.name', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return Subject[] Returns an array of Subject objects
+     */
+    public function searchSubject($keyword)
+    {
+        return $this->createQueryBuilder('subject')
+            ->andWhere('subject.name LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->orderBy('subject.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Subject[] Returns an array of Subject objects
     //  */

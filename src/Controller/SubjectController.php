@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Subject;
+use App\Repository\SubjectRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,62 @@ class SubjectController extends AbstractController
     {
         $user = $this->getUser();
         $subjects = $this->getDoctrine()->getRepository(Subject::class)->findAll();
+        return $this->render('subject/index.html.twig', [
+            'subjects' => $subjects,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/search', name: 'subject_search')]
+    public function subjectSearch(Request $request, SubjectRepository $subjectRepository)
+    {
+        $user = $this->getUser();
+        $keyword = $request->get("keyword");
+        $subjects = $subjectRepository->searchSubject($keyword);
+        return $this->render('subject/index.html.twig', [
+            'subjects' => $subjects,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/id/asc', name: 'subject_id_asc')]
+    public function subjectSortIdAsc(SubjectRepository $subjectRepository)
+    {
+        $user = $this->getUser();
+        $subjects = $subjectRepository->sortByIDAsc();
+        return $this->render('subject/index.html.twig', [
+            'subjects' => $subjects,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/id/desc', name: 'subject_id_desc')]
+    public function subjectSortIdDesc(SubjectRepository $subjectRepository)
+    {
+        $user = $this->getUser();
+        $subjects =$subjectRepository->sortByIDDesc();
+        return $this->render('subject/index.html.twig', [
+            'subjects' => $subjects,
+            'user' =>  $user
+        ]);
+    }
+
+    #[Route('/name/asc', name: 'subject_name_asc')]
+    public function subjectSortNameAsc(SubjectRepository $subjectRepository)
+    {
+        $user = $this->getUser();
+        $subjects = $subjectRepository->sortByNameAsc();
+        return $this->render('subject/index.html.twig', [
+            'subjects' => $subjects,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/name/desc', name: 'subject_name_desc')]
+    public function subjectSortNameDesc(SubjectRepository $subjectRepository)
+    {
+        $user = $this->getUser();
+        $subjects = $subjectRepository->sortByNameDesc();
         return $this->render('subject/index.html.twig', [
             'subjects' => $subjects,
             'user' => $user
@@ -37,6 +94,9 @@ class SubjectController extends AbstractController
         ]);
     }
 
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/delete/{id}', name: 'subject_delete')]
     public function subjectDelete($id)
     {
@@ -52,6 +112,9 @@ class SubjectController extends AbstractController
         return $this->redirectToRoute("subject_list");
     }
 
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add', name: 'subject_add')]
     public function subjectAdd(Request $request)
     {
@@ -72,7 +135,10 @@ class SubjectController extends AbstractController
         }
     }
 
-    #[Route('/edit/{id}', name: 'subject_delete')]
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+     */
+    #[Route('/edit/{id}', name: 'subject_edit')]
     public function subjectEdit(Request $request, $id)
     {
         $user = $this->getUser();
