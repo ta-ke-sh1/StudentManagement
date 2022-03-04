@@ -6,6 +6,9 @@ use App\Entity\Teacher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 
+
+
+
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -22,6 +25,7 @@ class TeacherRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Teacher::class);
     }
+
 
     /**
      * @throws ORMException
