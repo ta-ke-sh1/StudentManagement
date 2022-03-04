@@ -14,15 +14,18 @@ class SubjectController extends AbstractController
     #[Route('/', name: 'subject_list')]
     public function subjectList()
     {
+        $user = $this->getUser();
         $subjects = $this->getDoctrine()->getRepository(Subject::class)->findAll();
         return $this->render('subject/index.html.twig', [
             'subjects' => $subjects,
+            'user' => $user
         ]);
     }
 
     #[Route('/{id}', name: 'subject_index')]
     public function subjectDetail($id)
     {
+        $user = $this->getUser();
         $subject = $this->getDoctrine()->getRepository(Subject::class)->find($id);
         if ($subject == null) {
             $this->addFlash('error', "Subject does not exist!");
@@ -30,6 +33,7 @@ class SubjectController extends AbstractController
         }
         return $this->render('subject/detail.html.twig', [
             'subject' => $subject,
+            'user' => $user
         ]);
     }
 
@@ -51,6 +55,7 @@ class SubjectController extends AbstractController
     #[Route('/add', name: 'subject_add')]
     public function subjectAdd(Request $request)
     {
+        $user = $this->getUser();
         $subject = new Subject;
         $form = $this->createForm(SubjectType::class, $subject);
         $form->handleRequest($request);
@@ -61,7 +66,8 @@ class SubjectController extends AbstractController
             return $this->redirectToRoute("subject_list");
         } else {
             return $this->renderForm("subject/add.html.twig", [
-                'SubjectForm' => $form
+                'SubjectForm' => $form,
+                'user' => $user
             ]);
         }
     }
@@ -69,6 +75,7 @@ class SubjectController extends AbstractController
     #[Route('/edit/{id}', name: 'subject_delete')]
     public function subjectEdit(Request $request, $id)
     {
+        $user = $this->getUser();
         $subject = $this->getDoctrine()->getRepository(Subject::class)->find($id);
         $form = $this->createForm(SubjectType::class, $subject);
         $form->handleRequest($request);
@@ -79,7 +86,8 @@ class SubjectController extends AbstractController
             return $this->redirectToRoute("subject_list");
         } else {
             return $this->renderForm("subject/add.html.twig", [
-                'SubjectForm' => $form
+                'SubjectForm' => $form,
+                'user' => $user
             ]);
         }
     }

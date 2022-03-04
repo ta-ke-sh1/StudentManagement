@@ -37,13 +37,8 @@ class Student
     #[ORM\OneToOne(mappedBy: 'student', targetEntity: User::class, cascade: ['persist', 'remove'])]
     private $user;
 
-<<<<<<< HEAD
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $avatar;
-=======
     #[ORM\OneToMany(mappedBy: 'student', targetEntity: SubjectSchedule::class)]
     private $subjectSchedules;
->>>>>>> 9bdfc28bf9668fca56ed27b13668b08004cc1a50
 
     public function __construct()
     {
@@ -183,16 +178,6 @@ class Student
         return $this;
     }
 
-<<<<<<< HEAD
-    public function getAvatar(): ?string
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(?string $avatar): self
-    {
-        $this->avatar = $avatar;
-=======
     /**
      * @return Collection<int, SubjectSchedule>
      */
@@ -219,7 +204,6 @@ class Student
                 $subjectSchedule->setStudent(null);
             }
         }
->>>>>>> 9bdfc28bf9668fca56ed27b13668b08004cc1a50
 
         return $this;
     }

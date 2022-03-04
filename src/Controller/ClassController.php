@@ -14,15 +14,18 @@ class ClassController extends AbstractController
     #[Route('/', name: 'classFGW_list')]
     public function classFGWList()
     {
+        $user = $this->getUser();
         $classFGWs = $this->getDoctrine()->getRepository(ClassFGW::class)->findAll();
         return $this->render('classFGW/index.html.twig', [
             'classFGWs' => $classFGWs,
+            'user' => $user
         ]);
     }
 
     #[Route('/{id}', name: 'classFGW_index')]
     public function classFGWDetail($id)
     {
+        $user = $this->getUser();
         $classFGW = $this->getDoctrine()->getRepository(ClassFGW::class)->find($id);
         if ($classFGW == null) {
             $this->addFlash('error', "ClassFGW does not exist!");
@@ -30,12 +33,14 @@ class ClassController extends AbstractController
         }
         return $this->render('classFGW/detail.html.twig', [
             'classFGW' => $classFGW,
+            'user' => $user
         ]);
     }
 
     #[Route('/delete/{id}', name: 'classFGW_delete')]
     public function classFGWDelete($id)
     {
+        $user = $this->getUser();
         $classFGW = $this->getDoctrine()->getRepository(ClassFGW::class)->find($id);
         if ($classFGW == null) {
             $this->addFlash('error', "ClassFGW does not exist!");
@@ -51,6 +56,7 @@ class ClassController extends AbstractController
     #[Route('/add', name: 'classFGW_add')]
     public function classFGWAdd(Request $request)
     {
+        $user = $this->getUser();
         $classFGW = new ClassFGW;
         $form = $this->createForm(ClassFGWType::class, $classFGW);
         $form->handleRequest($request);
@@ -61,7 +67,8 @@ class ClassController extends AbstractController
             return $this->redirectToRoute("classFGW_list");
         } else {
             return $this->renderForm("classFGW/add.html.twig", [
-                'ClassFGWForm' => $form
+                'ClassFGWForm' => $form,
+                'user' => $user
             ]);
         }
     }
@@ -69,6 +76,7 @@ class ClassController extends AbstractController
     #[Route('/edit/{id}', name: 'classFGW_delete')]
     public function classFGWEdit(Request $request, $id)
     {
+        $user = $this->getUser();
         $classFGW = $this->getDoctrine()->getRepository(ClassFGW::class)->find($id);
         $form = $this->createForm(ClassFGWType::class, $classFGW);
         $form->handleRequest($request);
@@ -79,7 +87,8 @@ class ClassController extends AbstractController
             return $this->redirectToRoute("classFGW_list");
         } else {
             return $this->renderForm("classFGW/add.html.twig", [
-                'ClassFGWForm' => $form
+                'ClassFGWForm' => $form,
+                'user' => $user
             ]);
         }
     }

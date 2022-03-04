@@ -4,11 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Teacher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-<<<<<<< HEAD
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-=======
->>>>>>> 9bdfc28bf9668fca56ed27b13668b08004cc1a50
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
