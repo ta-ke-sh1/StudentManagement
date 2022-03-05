@@ -29,30 +29,24 @@
 						<a href="{{ path('teacher_list') }}" class="nav_link">
 							Teachers
 						</a>
-						<a href="{{ path('student_list') }}" class="nav_link active">
-							Students
-						</a>
-					{% endif %}
-					<a href="{{ path('classFGW_list') }}" class="nav_link">
-
 					{% endif %}
 					<a href="{{ path('subject_list') }}" class="nav_link">
-					Subjects
+						Subjects
 					</a>
 					<a href="{{ path('schedule_list') }}" class="nav_link">
-					Subject Schedule
+						Schedule
 					</a>
 					<a href="{{ path('student_list') }}" class="nav_link active">
 						Students
 					</a>
-					<a href="{{ path('classFGW_list') }}" class="nav_link active">
+					<a href="{{ path('classFGW_list') }}" class="nav_link">
 						Class
 					</a>
-                    
 					<hr id="btmline"/>
+					<br>
+					<a href="{{ path('app_logout') }}" class="nav_link">Log Out</a>
 				</div>
 			</div>
-			<a href="{{ path('app_logout') }}" class="nav_link">Log Out</a>
 		</nav>
 	</div>
 	<!-- Sidebar -->

@@ -27,7 +27,7 @@ a {
     top: -60px;
     left: -20%;
     width: var(--nav-width);
-    height: 100vh;
+    min-height: 120vh;
     transition: 0.5s;
     z-index: var(--z-fixed);
     overflow: auto;

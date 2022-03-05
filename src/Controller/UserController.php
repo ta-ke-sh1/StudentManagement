@@ -105,7 +105,7 @@ class UserController extends AbstractController
                 } catch (FileException $e) {
                     throw $e;
                 }
-                $newUser->setImage($imgName);
+                $newUser->setAvatar($imgName);
             }
 
             $newUser->setPassword(

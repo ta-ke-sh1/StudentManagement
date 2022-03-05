@@ -25,32 +25,29 @@
 					<hr/>
 					<br>
 					{% if is_granted('ROLE_ADMIN') %}
-						<a href="{{ path('user_list') }}" class="nav_link">Users</a>
+						<a href="{{ path('user_list') }}" class="nav_link active">Users</a>
 						<a href="{{ path('teacher_list') }}" class="nav_link">
 							Teachers
 						</a>
 					{% endif %}
-
-					{% endif %}
 					<a href="{{ path('subject_list') }}" class="nav_link">
-					Subjects
+						Subjects
 					</a>
 					<a href="{{ path('schedule_list') }}" class="nav_link">
-					Subject Schedule
+						Schedule
 					</a>
-					<a href="{{ path('student_list') }}" class="nav_link active">
+					<a href="{{ path('student_list') }}" class="nav_link">
 						Students
 					</a>
-					<a href="{{ path('classFGW_list') }}" class="nav_link active">
+					<a href="{{ path('classFGW_list') }}" class="nav_link">
 						Class
 					</a>
-                    
 					<hr id="btmline"/>
+					<br>
+					<a href="{{ path('app_logout') }}" class="nav_link">Log Out</a>
 				</div>
 			</div>
-			<a href="{{ path('app_logout') }}" class="nav_link">Log Out</a>
 		</nav>
 	</div>
 	<!-- Sidebar -->
 {% endblock %}
-
