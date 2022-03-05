@@ -2,16 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Student;
 use App\Form\StudentType;
 use App\Repository\GradeRepository;
 use App\Repository\StudentRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 #[Route('/student')]
@@ -190,7 +192,7 @@ class StudentController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
     #[Route('/edit/{id}', name: 'student_edit')]
-    public function studentEdit(Request $request, $id)
+    public function studentEdit(Request $request, $id, UserRepository $userRepository)
     {
         $user = $this->getUser();
         $student = $this->getDoctrine()->getRepository(Student::class)->find($id);

@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block sidebar %}
+	<style>
+		.avatar {
+			width: 80px;
+			height: 80px;
+			border-radius: 40px;
+			margin-left: 8px;w
+		}
+	</style>
 	<!-- Sidebar -->
 	<div class="l-navbar" id="nav-bar">
 		<nav class="nav">
@@ -7,10 +15,22 @@
 				<a href="{{ path('homepage') }}" class="nav_logo">
 					<img src="{{ asset('logo/logo_blue.png') }}" alt=""/>
 				</a>
-				<a href="{{ path('user_list') }}" class="nav_link">Profile</a>
-				<hr/>
-				<br/>
 				<div class="nav_list">
+					<br>
+					<a href="{{ path('user_edit', { id: user.id }) }}">
+						<img src="{{ asset('users/' ~ user.avatar) }}" class="avatar" alt=""/>
+					</a>
+					<br>
+					<br>
+					<hr/>
+					<br>
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('user_list') }}" class="nav_link">Users</a>
+						<a href="{{ path('teacher_list') }}" class="nav_link">
+							Teachers
+						</a>
+					{% endif %}
+
 					<a href="{{ path('student_list') }}" class="nav_link">
 						Students
 					</a>
@@ -19,6 +39,9 @@
 					</a>
 					<a href="{{ path('subject_list') }}" class="nav_link">
 						Subject
+					</a>
+					<a href="{{ path('subject_list') }}" class="nav_link">
+						Schedule
 					</a>
 					<hr id="btmline"/>
 				</div>

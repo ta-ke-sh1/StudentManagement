@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Student;
 use App\Entity\User;
 use App\Form\StudentType;
 use Symfony\Component\Form\AbstractType;
@@ -47,13 +48,6 @@ class UserType extends AbstractType
                     'class' => 'inp'
                 ]
             ])
-            ->add('confirmPassword', PasswordType::class, [
-                'required' => true,
-                'attr' => [
-                    'id' => 'saveBtn',
-                    'class' => 'inp'
-                ]
-            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -63,6 +57,15 @@ class UserType extends AbstractType
                     'id' => 'saveBtn',
                     'class' => 'inp editConfirm'
                 ],
+            ])
+            ->add('student', EntityType::class, [
+                'label' => 'Select the student\'s to link with',
+                'data_class' => null,
+                'class' => Student::class,
+                'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'inp'
+                ]
             ])
             ->add('Save', SubmitType::class, [
                 'attr' => [

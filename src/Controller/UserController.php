@@ -78,8 +78,8 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/add', name: 'user_add')]
-    public function userAdd(Request $request, UserPasswordHasherInterface $userPasswordHasher)
+    #[Route('/add/newUser', name: 'user_add')]
+    public function userAddAnother(Request $request, UserPasswordHasherInterface $userPasswordHasher)
     {
         $user = $this->getUser();
         $newUser = new User;
@@ -93,7 +93,7 @@ class UserController extends AbstractController
             if ($file != null) {
                 $image = $newUser->getAvatar();
                 $id = uniqid();
-                $imgName = $newUser->getName() . $id;
+                $imgName = $newUser->getUsername() . $id;
                 $imgExtension = $image->guessExtension();
                 $imgName = $imgName . '.' . $imgExtension;
                 try {
@@ -107,9 +107,9 @@ class UserController extends AbstractController
                 $newUser->setImage($imgName);
             }
 
-            $user->setPassword(
+            $newUser->setPassword(
                 $userPasswordHasher->hashPassword(
-                    $user,
+                    $newUser,
                     $form->get('plainPassword')->getData()
                 )
             );
@@ -120,7 +120,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute("user_list");
         } else {
             return $this->renderForm("user/add.html.twig", [
-                'UserForm' => $form,
+                'Form' => $form,
                 "user" => $user
             ]);
         }
@@ -134,55 +134,46 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $confirm = $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('confirmPassword')->getData()
-            );
-
-            if ($user->getPassword() == $confirm) {
-                // Xu ly ten & duong dan cua anh
-                // B1: lay du lieu anh tu form
-                $file = $form['avatar']->getData();
-                // B2: check xem du lieu anh null hay k
-                if ($file != null) {
-                    $image = $user->getAvatar();
-                    $id = uniqid();
-                    $imgName = $user->getName() . $id;
-                    $imgExtension = $image->guessExtension();
-                    $imgName = $imgName . '.' . $imgExtension;
-                    try {
-                        $image->move(
-                            $this->getParameter('user_image'), // Tiep tuc edit trong services.yaml trong folder config
-                            $imgName
-                        );
-                    } catch (FileException $e) {
-                        throw $e;
-                    }
-                    $user->setImage($imgName);
+            // Xu ly ten & duong dan cua anh
+            // B1: lay du lieu anh tu form
+            $file = $form['avatar']->getData();
+            // B2: check xem du lieu anh null hay k
+            if ($file != null) {
+                $image = $user->getAvatar();
+                $id = uniqid();
+                $imgName = $user->getName() . $id;
+                $imgExtension = $image->guessExtension();
+                $imgName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('user_image'), // Tiep tuc edit trong services.yaml trong folder config
+                        $imgName
+                    );
+                } catch (FileException $e) {
+                    throw $e;
                 }
-
-                $manager = $this->getDoctrine()->getManager();
-                $manager->persist($user);
-                $manager->flush();
-
-                $roles = $user->getRoles();
-                if ($roles != null) {
-                    if (in_array('ROLE_STUDENT', $roles)) {
-                        return $this->redirectToRoute('student_role_view');
-                    }
-                }
-                return $this->redirectToRoute("homepage");
-            } else {
-                $this->addFlash('error', 'Wrong password!');
+                $user->setImage($imgName);
             }
-        } else {
-            return $this->renderForm("user/edit.html.twig", [
-                'UserForm' => $form,
-                'user' => $userMain
-            ]);
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($user);
+            $manager->flush();
+
+            $roles = $user->getRoles();
+
+            if ($roles != null) {
+                if (in_array('ROLE_STUDENT', $roles)) {
+                    return $this->redirectToRoute('student_role_view');
+                }
+            }
+            return $this->redirectToRoute("homepage");
         }
+        return $this->renderForm("user/edit.html.twig", [
+            'UserForm' => $form,
+            'user' => $userMain
+        ]);
     }
-    
+
     /** 
      * @IsGranted("ROLE_ADMIN")
      */

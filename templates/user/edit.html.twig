@@ -148,7 +148,9 @@ extends "user/header.html.twig" %}
 				<div class="widget"> {{ form_start(UserForm) }} {{ form_row(UserForm.username) }}
 
 					<div id="pwd"> {{ form_row(UserForm.plainPassword)}}
-</div> {{ form_row(UserForm.confirmPassword)}} {{ form_row(UserForm.avatar)}}{{ form_row(UserForm.roles)}}{{ form_row(UserForm.Save)}} {{ form_end(UserForm) }}
+</div>  
+{{ form_row(UserForm.avatar)}}{{ form_row(UserForm.roles)}}{{ form_row(UserForm.student)}}{{ form_row(UserForm.Save)}} {{ form_end(UserForm) }}
+
 
 				</div>
 			</div>

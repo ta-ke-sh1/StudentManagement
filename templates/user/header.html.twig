@@ -25,12 +25,12 @@
 					<hr/>
 					<br>
 					{% if is_granted('ROLE_ADMIN') %}
-						<a href="{{ path('user_list') }}" class="nav_link active">Users</a>
+						<a href="{{ path('user_list') }}" class="nav_link">Users</a>
+						<a href="{{ path('teacher_list') }}" class="nav_link">
+							Teachers
+						</a>
 					{% endif %}
-					<a href="{{ path('teacher_list') }}" class="nav_link">
-						Teachers
-					</a>
-					<a href="{{ path('student_list') }}" class="nav_link">
+					<a href="{{ path('student_list') }}" class="nav_link active">
 						Students
 					</a>
 					<a href="{{ path('classFGW_list') }}" class="nav_link">
@@ -47,3 +47,4 @@
 	</div>
 	<!-- Sidebar -->
 {% endblock %}
+

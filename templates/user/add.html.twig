@@ -1,33 +1,146 @@
 {# áp dụng template của bootstrap vào form #}
-{% form_theme StudentForm 'bootstrap_5_layout.html.twig' %}
+{% form_theme Form 'bootstrap_5_layout.html.twig' %}
 {# kế thừa file layout (template) #}
 {%
 extends "user/header.html.twig" %}
-{% block searchBar %}
-	<nav class="navbar navbar-expand-lg navbar-dark">
-		<div class="container-fluid">
-			<div class="form-group col-md-4 searchBar">
-				<form action="#" method="POST">
-					<input type="search" class="form-control" name="title" placeholder="Enter student name" required/>
-				</form>
-			</div>
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a href="#">Profile</a>
-				</li>
-				<li class="nav-item">
-					<a href="#">Log Out</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
-{% endblock %}
 {# override nội dung của phần body trong template #}
 {% block body %}
+	<style>
+		.container-fluid {
+			position: absolute;
+			left: 0;
+			min-height: 800px;
+		}
+
+		.container-fluid .row {
+			width: 100%;
+		}
+
+		.widget {
+			margin-left: 70%;
+			width: fit-content;
+			height: fit-content;
+			padding: 42px 50px;
+			z-index: 10;
+			border: none;
+			background-color: white;
+		}
+
+		.subTxt {
+			color: grey;
+		}
+
+		#submit {
+			margin-top: -2px;
+			background: rgb(2, 0, 36);
+			background-size: 300% 100%;
+			color: white;
+			transition-duration: 0.6s;
+			transition: all 0.4s ease-in-out;
+			background-image: linear-gradient(90deg, #2B32B2 0%, #1488CC 100%);
+			border: none;
+			padding: 20px;
+		}
+
+		#cancel {
+			margin-top: 22px;
+			background: rgb(2, 0, 36);
+			background-size: 300% 100%;
+			color: white;
+			transition-duration: 0.6s;
+			transition: all 0.4s ease-in-out;
+			background-image: linear-gradient(90deg, #d53369 0%, #cbad6d 100%);
+			border: none;
+			padding: 20px;
+		}
+
+		#submit:hover {
+			background-position: 100% 0;
+		}
+
+		#cancel:hover {
+			background-position: 100% 0;
+		}
+
+		.rem {
+			margin-top: -25px;
+		}
+
+		.ckbx {
+			padding: 2px;
+			height: 30px;
+			width: 30px;
+			-webkit-border-radius: 50px;
+			-moz-border-radius: 50px;
+		}
+		.round {
+			position: relative;
+		}
+
+		.round label {
+			background-color: #fff;
+			border: 1px solid #ccc;
+			border-radius: 50%;
+			cursor: pointer;
+			height: 28px;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 28px;
+		}
+
+		.round label:after {
+			border: 2px solid #fff;
+			border-top: none;
+			border-right: none;
+			content: "";
+			height: 6px;
+			left: 7px;
+			opacity: 0;
+			position: absolute;
+			top: 8px;
+			transform: rotate(-45deg);
+			width: 12px;
+		}
+
+		.round input[type="checkbox"] {
+			visibility: hidden;
+		}
+
+		.round input[type="checkbox"]:checked + label {
+			background-color: #1488CC;
+			border-color: #26a0da;
+		}
+
+		.round input[type="checkbox"]:checked + label:after {
+			opacity: 1;
+		}
+
+		h1 {
+			margin-left: 8px;
+			color: #2B32B2;
+			font-family: SF-bold;
+			margin-bottom: 16px;
+		}
+
+		body {
+		}
+
+		p {
+			margin-left: 8px;
+			margin-bottom: 28px;
+		}
+
+		.remember {
+			position: absolute;
+			margin-left: 36px;
+			margin-top: -8px;
+		}
+	</style>
+
 	<div class="container col-md-4 mt-4 text-center">
-		<h2 class="text text-primary">Add new Student</h2>
-		<div> 
-			{{ form(StudentForm) }}
+		<h2 class="text text-primary">Add new User</h2>
+		<div> {{ form(Form) }}
 			</div>
 		</div>
-{% endblock %}
+	{% endblock %}
