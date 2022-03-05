@@ -50,7 +50,6 @@
 						<th>Name</th>
 						<th>Description</th>
 						<th>Total Slots</th>
-						<th>Class</th>
 						<th>Options</th>
 					</tr>
 				</thead>
@@ -61,10 +60,6 @@
 							<td>{{ subject.name }}</td>
 							<td>{{ subject.description }}</td>
 							<td>{{ subject.totalSlots }}</td>
-							<td>
-                                {% if subject.classFGWs %} {{ subject.classFGWs.name }}
-								{% endif %}
-                            </td>
 							<td>
 								<a name="" id="edit" class="btn" href="{{ path('subject_edit', { id: subject.id }) }}" role="button">Edit</a>
 								<br/>

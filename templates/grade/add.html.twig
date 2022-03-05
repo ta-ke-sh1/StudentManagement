@@ -1,12 +1,12 @@
 {# áp dụng template của bootstrap vào form #}
-{% form_theme SubjectForm 'bootstrap_5_layout.html.twig' %}
+{% form_theme GradeForm 'bootstrap_5_layout.html.twig' %}
 {# kế thừa file layout (template) #}
-{%extends "subject/index.html.twig" %}
+{%extends "grade/header.html.twig" %}
 {# override nội dung của phần body trong template #}
 {% block body %}
 	<div class="container col-md-4 mt-4 text-center">
-		<h2 class="text text-primary">Add Subject</h2>
-		<div> {{ form(SubjectForm) }}
+		<h2 class="text text-primary">Add Grade</h2>
+		<div> {{ form(GradeForm) }}
 			</div>
 		</div>
 	{% endblock %}
