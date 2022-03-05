@@ -107,7 +107,7 @@ class SubjectScheduleController extends AbstractController
             return $this->redirectToRoute("subject_list");
         } else {
             return $this->renderForm("subject_schedule/add.html.twig", [
-                'SubjectForm' => $form,
+                'ScheduleForm' => $form,
                 'user' => $user
             ]);
         }
@@ -121,7 +121,7 @@ class SubjectScheduleController extends AbstractController
     {
         $user = $this->getUser();
         $schedule = $this->getDoctrine()->getRepository(SubjectSchedule::class)->find($id);
-        $form = $this->createForm(SubjectType::class, $schedule);
+        $form = $this->createForm(SubjectScheduleType::class, $schedule);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
@@ -130,7 +130,7 @@ class SubjectScheduleController extends AbstractController
             return $this->redirectToRoute("schedule_list");
         } else {
             return $this->renderForm("subject_schedule/add.html.twig", [
-                'SubjectForm' => $form,
+                'ScheduleForm' => $form,
                 'user' => $user
             ]);
         }

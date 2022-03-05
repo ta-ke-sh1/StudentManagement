@@ -61,7 +61,7 @@
 								{% endif %}</td>
 							<td>{% if schedule.class %} {{ schedule.class.name }}
 								{% endif %}</td>
-							<td>{{ schedule.date }}</td>
+							<td>{{ schedule.date |  date('d-m-Y')}}</td>
                             <td>{{ schedule.slot }}</td>
 							<td>
 								<a name="" id="edit" class="btn" href="{{ path('schedule_edit', { id: schedule.id }) }}" role="button">Edit</a>
