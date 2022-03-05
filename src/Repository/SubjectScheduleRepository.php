@@ -67,6 +67,18 @@ class SubjectScheduleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return SubjectSchedule[] Returns an array of SubjectSchedule objects
+     */
+    public function searchSchedule($keyword)
+    {
+        return $this->createQueryBuilder('schedule')
+            ->andWhere('schedule.subject LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->orderBy('schedule.subject', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return SubjectSchedule[] Returns an array of SubjectSchedule objects
     //  */

@@ -60,6 +60,18 @@ class SubjectScheduleController extends AbstractController
         ]);
     }
 
+    #[Route('/search', name: 'schedule_search')]
+    public function scheduleSearch(Request $request, SubjectScheduleRepository $subjectScheduleRepository)
+    {
+        $user = $this->getUser();
+        $keyword = $request->get("keyword");
+        $schedules = $subjectScheduleRepository->searchSchedule($keyword);
+        return $this->render('subject/index.html.twig', [
+            'schedules' => $schedules,
+            'user' => $user
+        ]);
+    }
+
     /** 
      * @IsGranted("ROLE_ADMIN")
      */
