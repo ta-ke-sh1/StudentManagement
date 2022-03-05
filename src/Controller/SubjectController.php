@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Entity\Subject;
 use App\Repository\SubjectRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/subject')]
 class SubjectController extends AbstractController
