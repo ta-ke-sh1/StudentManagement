@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\SubjectSchedule;
 use App\Form\SubjectScheduleType;
+use App\Repository\SubjectScheduleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,28 @@ class SubjectScheduleController extends AbstractController
         return $this->render('subject_schedule/index.html.twig', [
             'schedules' => $schedules, 
             'user' => $user]);
+    }
+
+    #[Route('/id/asc', name: 'schedule_id_asc')]
+    public function scheduleSortIdAsc(SubjectScheduleRepository $subjectScheduleRepository)
+    {
+        $user = $this->getUser();
+        $subjects = $subjectScheduleRepository->sortByIDAsc();
+        return $this->render('subject/index.html.twig', [
+            'subjects' => $subjects,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/id/desc', name: 'schedule_id_desc')]
+    public function scheduleSortIdDesc(SubjectScheduleRepository $subjectScheduleRepository)
+    {
+        $user = $this->getUser();
+        $subjects =$subjectScheduleRepository->sortByIDDesc();
+        return $this->render('subject/index.html.twig', [
+            'subjects' => $subjects,
+            'user' =>  $user
+        ]);
     }
 
     #[Route('/{id}', name: 'schedule_detail')]

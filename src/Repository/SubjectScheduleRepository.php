@@ -45,6 +45,28 @@ class SubjectScheduleRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return SubjectSchedule[] Returns an array of SubjectSchedule objects
+     */
+    public function sortByIDAsc()
+    {
+        return $this->createQueryBuilder('schedule')
+            ->orderBy('schedule.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return SubjectSchedule[] Returns an array of SubjectSchedule objects
+     */
+    public function sortByIDDesc()
+    {
+        return $this->createQueryBuilder('schedule')
+            ->orderBy('schedule.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return SubjectSchedule[] Returns an array of SubjectSchedule objects
     //  */
