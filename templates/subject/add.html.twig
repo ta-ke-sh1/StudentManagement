@@ -1,0 +1,32 @@
+{# áp dụng template của bootstrap vào form #}
+{% form_theme SubjectForm 'bootstrap_5_layout.html.twig' %}
+{# kế thừa file layout (template) #}
+{%extends "subject/index.html.twig" %}
+{% block searchBar %}
+	<nav class="navbar navbar-expand-lg navbar-dark">
+		<div class="container-fluid">
+			<div class="form-group col-md-4 searchBar">
+				<form action="#" method="POST">
+					<input type="search" class="form-control" name="title" placeholder="Enter subject name" required/>
+				</form>
+			</div>
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a href="#">Profile</a>
+				</li>
+				<li class="nav-item">
+					<a href="#">Log Out</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+{% endblock %}
+{# override nội dung của phần body trong template #}
+{% block body %}
+	<div class="container col-md-4 mt-4 text-center">
+		<h2 class="text text-primary">Add new Subject</h2>
+		<div> 
+			{{ form(SubjectForm) }}
+			</div>
+		</div>
+{% endblock %}
