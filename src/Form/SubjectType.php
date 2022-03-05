@@ -23,14 +23,6 @@ class SubjectType extends AbstractType
                     'class' => 'inp'
                 ]
             ])
-            ->add('classFGWs', EntityType::class, [
-                'label' => 'Select the class for this subject',
-                'class' => ClassFGW::class,
-                'choice_label' => 'name',
-                'attr' => [
-                    'class' => 'inp'
-                ]
-            ])
             ->add('description', TextType::class, [
                 'label' => 'Subject Description',
                 'required' => true,
