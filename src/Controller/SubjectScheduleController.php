@@ -28,7 +28,7 @@ class SubjectScheduleController extends AbstractController
     {
         $user = $this->getUser();
         $subjects = $subjectScheduleRepository->sortByIDAsc();
-        return $this->render('subject/index.html.twig', [
+        return $this->render('subject_schedule/index.html.twig', [
             'subjects' => $subjects,
             'user' => $user
         ]);
@@ -39,7 +39,7 @@ class SubjectScheduleController extends AbstractController
     {
         $user = $this->getUser();
         $subjects =$subjectScheduleRepository->sortByIDDesc();
-        return $this->render('subject/index.html.twig', [
+        return $this->render('subject_schedule/index.html.twig', [
             'subjects' => $subjects,
             'user' =>  $user
         ]);
@@ -54,7 +54,7 @@ class SubjectScheduleController extends AbstractController
             $this->addFlash('error', "This schedule does not exist!");
             return $this->redirectToRoute("schedule_list");
         }
-        return $this->render('subject/detail.html.twig', [
+        return $this->render('subject_schedule/detail.html.twig', [
             'schedule' => $schedule,
             'user' => $user
         ]);
@@ -66,7 +66,7 @@ class SubjectScheduleController extends AbstractController
         $user = $this->getUser();
         $keyword = $request->get("keyword");
         $schedules = $subjectScheduleRepository->searchSchedule($keyword);
-        return $this->render('subject/index.html.twig', [
+        return $this->render('subject_schedule/index.html.twig', [
             'schedules' => $schedules,
             'user' => $user
         ]);
