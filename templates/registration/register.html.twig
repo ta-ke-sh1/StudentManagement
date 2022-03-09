@@ -23,6 +23,8 @@
 			z-index: 10;
 			border: none;
 			background-color: white;
+			margin-bottom: 40px;
+			margin-top: -20px;
 		}
 
 		.subTxt {
@@ -145,7 +147,7 @@
 					<br>
 					<hr>
 					<br>
-					<br> {{ form_start(registrationForm) }} {{ form_row(registrationForm.username) }} {{ form_row(registrationForm.plainPassword)}} {{ form_row(registrationForm.roles)}} {{ form_row(registrationForm.avatar)}}
+<br> {{ form_start(registrationForm) }} {{ form_row(registrationForm.username) }}{{ form_row(registrationForm.plainPassword)}}{{ form_row(registrationForm.lastName) }}{{ form_row(registrationForm.firstName) }}
 					<button type="submit" id="submit" class="btn inp">Register</button> {{ form_end(registrationForm) }}
 					<a href="{{ path('app_login') }}">
 						<button type="submit" id="cancel" class="btn inp">Cancel</button>

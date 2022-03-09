@@ -17,11 +17,9 @@
 				</a>
 				<div class="nav_list">
 					<br>
-					<a href="{{ path('user_edit', { id: user.id }) }}">
-						<img src="{{ asset('users/' ~ user.avatar) }}" class="avatar" alt=""/>
+					<a href="{{ path('user_edit', { id: user.id }) }}" class="nav_link">
+						Edit User
 					</a>
-					<br>
-					<br>
 					<hr/>
 					<br>
 					{% if is_granted('ROLE_ADMIN') %}

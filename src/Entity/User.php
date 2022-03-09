@@ -26,14 +26,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $avatar;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $confirmPassword;
-
     #[ORM\OneToOne(inversedBy: 'user', targetEntity: Student::class, cascade: ['persist', 'remove'])]
     private $student;
+
+    #[ORM\Column(type: 'string', length: 50)]
+    private $firstName;
+
+    #[ORM\Column(type: 'string', length: 50)]
+    private $lastName;
 
     public function getId(): ?int
     {
@@ -119,31 +119,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getAvatar()
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar($avatar)
-    {
-        if ($avatar != null) {
-            $this->avatar = $avatar;
-        }
-        return $this;
-    }
-
-    public function getConfirmPassword(): ?string
-    {
-        return $this->confirmPassword;
-    }
-
-    public function setConfirmPassword(?string $confirmPassword): self
-    {
-        $this->confirmPassword = $confirmPassword;
-
-        return $this;
-    }
-
     public function getStudent(): ?Student
     {
         return $this->student;
@@ -152,6 +127,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setStudent(?Student $student): self
     {
         $this->student = $student;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
 
         return $this;
     }
