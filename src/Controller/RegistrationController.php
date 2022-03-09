@@ -33,7 +33,7 @@ class RegistrationController extends AbstractController
 
             $user->setRoles(['ROLE_STUDENT']);
             $student = new Student;
-            $student->setName($user->getLastName() . $user->getFirstName());
+            $student->setName($user->getFirstName() .' '. $user->getLastName());
             $student->setImage('anonymous.png');
             $student->setMajor('Unset');
             $student->setGpa(0);

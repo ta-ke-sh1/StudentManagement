@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 #[Route('/student')]
 class StudentController extends AbstractController
 {
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/', name: 'student_list')]
     public function studentList()
     {
@@ -30,6 +33,9 @@ class StudentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/search', name: 'student_search')]
     public function studentSearch(Request $request, StudentRepository $studentRepository)
     {
@@ -42,6 +48,9 @@ class StudentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/id/asc', name: 'student_id_asc')]
     public function studentSortIdAsc(StudentRepository $studentRepository)
     {
@@ -53,6 +62,9 @@ class StudentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/id/desc', name: 'student_id_desc')]
     public function studentSortIdDesc(StudentRepository $studentRepository)
     {
@@ -64,6 +76,9 @@ class StudentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/name/asc', name: 'student_name_asc')]
     public function studentSortNameAsc(StudentRepository $studentRepository)
     {
@@ -75,6 +90,9 @@ class StudentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/name/desc', name: 'student_name_desc')]
     public function studentSortNameDesc(StudentRepository $studentRepository)
     {

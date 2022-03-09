@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserSelfType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 #[Route('/user')]
 class UserController extends AbstractController
 {
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/', name: 'user_list')]
     public function userList()
     {
@@ -27,6 +31,10 @@ class UserController extends AbstractController
             "user" => $user
         ]);
     }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/id/asc', name: 'user_id_asc')]
     public function userSortIdAsc(UserRepository $userRepository)
     {
@@ -38,6 +46,10 @@ class UserController extends AbstractController
         ]);
     }
 
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/search', name: 'user_search')]
     public function userSearch(Request $request, UserRepository $userRepository)
     {
@@ -50,6 +62,9 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/id/desc', name: 'user_id_desc')]
     public function userSortIdDesc(UserRepository $userRepository)
     {
@@ -70,6 +85,7 @@ class UserController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}', name: 'user_detail')]
     public function userDetail($id)
     {
@@ -79,6 +95,9 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add/newUser', name: 'user_add')]
     public function userAddAnother(Request $request, UserPasswordHasherInterface $userPasswordHasher)
     {
@@ -87,26 +106,6 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $newUser);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // Xu ly ten & duong dan cua anh
-            // B1: lay du lieu anh tu form
-            $file = $form['avatar']->getData();
-            // B2: check xem du lieu anh null hay k
-            if ($file != null) {
-                $image = $newUser->getAvatar();
-                $id = uniqid();
-                $imgName = $newUser->getUsername() . $id;
-                $imgExtension = $image->guessExtension();
-                $imgName = $imgName . '.' . $imgExtension;
-                try {
-                    $image->move(
-                        $this->getParameter('user_image'), // Tiep tuc edit trong services.yaml trong folder config
-                        $imgName
-                    );
-                } catch (FileException $e) {
-                    throw $e;
-                }
-                $newUser->setAvatar($imgName);
-            }
 
             $newUser->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -127,6 +126,9 @@ class UserController extends AbstractController
         }
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/edit/{id}', name: 'user_edit')]
     public function userEdit(Request $request, $id, UserPasswordHasherInterface $userPasswordHasher)
     {
@@ -135,26 +137,46 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            // Xu ly ten & duong dan cua anh
-            // B1: lay du lieu anh tu form
-            $file = $form['avatar']->getData();
-            // B2: check xem du lieu anh null hay k
-            if ($file != null) {
-                $image = $user->getAvatar();
-                $id = uniqid();
-                $imgName = $user->getName() . $id;
-                $imgExtension = $image->guessExtension();
-                $imgName = $imgName . '.' . $imgExtension;
-                try {
-                    $image->move(
-                        $this->getParameter('user_image'), // Tiep tuc edit trong services.yaml trong folder config
-                        $imgName
-                    );
-                } catch (FileException $e) {
-                    throw $e;
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($user);
+            $manager->flush();
+
+            $roles = $user->getRoles();
+
+            if ($roles != null) {
+                if (in_array('ROLE_STUDENT', $roles)) {
+                    return $this->redirectToRoute('student_role_view');
                 }
-                $user->setImage($imgName);
             }
+            return $this->redirectToRoute("user_list");
+        }
+
+        return $this->renderForm("user/edit.html.twig", [
+            'UserForm' => $form,
+            'user' => $userMain
+        ]);
+    }
+
+    #[Route('/personal/edit', name: 'user_self_edit')]
+    public function userSelfEdit(Request $request, UserPasswordHasherInterface $userPasswordHasher)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(UserSelfType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
 
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($user);
@@ -169,9 +191,10 @@ class UserController extends AbstractController
             }
             return $this->redirectToRoute("homepage");
         }
-        return $this->renderForm("user/edit.html.twig", [
+
+        return $this->renderForm("user/edit_self.html.twig", [
             'UserForm' => $form,
-            'user' => $userMain
+            'user' => $user
         ]);
     }
 

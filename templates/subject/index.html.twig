@@ -1,4 +1,4 @@
-{% extends 'subject/header.html.twig' %} 
+{% extends 'subject/header.html.twig' %}
 {% block title %}Subjects
 {% endblock %}
 {% block body %}
@@ -22,13 +22,13 @@
 						<input type="search" class="form-control" name="keyword" placeholder="Enter Subject name" required/>
 					</form>
 				</div>
-				{# {% if is_granted('ROLE_ADMIN') %} #}
-				<div class="col">
-					<a name="" id="addBtn" class="btn" href="{{ path('subject_add') }}" role="button">
-						<span class="type" id="add">Add new Subject</span>
-					</a>
-				</div>
-				{# {% endif %} #}
+				{% if is_granted('ROLE_ADMIN') %}
+					<div class="col">
+						<a name="" id="addBtn" class="btn" href="{{ path('subject_add') }}" role="button">
+							<span class="type" id="add">Add new Subject</span>
+						</a>
+					</div>
+				{% endif %}
 				<div class="col">
 					<span class="type">Sort by ID:</span>
 					<a name="" id="" class="btn" href="{{ path('subject_id_asc') }}" role="button"><img src="{{ asset('icons/up.png') }}" width="20px" height="20px" alt=""/></a>
@@ -50,7 +50,11 @@
 						<th>Name</th>
 						<th>Description</th>
 						<th>Total Slots</th>
-						<th>Options</th>
+						{% if is_granted('ROLE_ADMIN') %}
+
+							<th>Options</th>
+						{% endif %}
+
 					</tr>
 				</thead>
 				<tbody>
@@ -60,16 +64,18 @@
 							<td>{{ subject.name }}</td>
 							<td>{{ subject.description }}</td>
 							<td>{{ subject.totalSlots }}</td>
-							<td>
-								<a name="" id="edit" class="btn" href="{{ path('subject_edit', { id: subject.id }) }}" role="button">Edit</a>
-								<br/>
-								<a name="" id="delete" class="btn" href="{{ path('subject_delete', { id: subject.id }) }}" role="button" onclick="return confirm('Are you sure?')">Delete</a>
-							</td>
-						</tr>
+							{% if is_granted('ROLE_ADMIN') %}
+								<td>
+									<a name="" id="edit" class="btn" href="{{ path('subject_edit', { id: subject.id }) }}" role="button">Edit</a>
+									<br/>
+									<a name="" id="delete" class="btn" href="{{ path('subject_delete', { id: subject.id }) }}" role="button" onclick="return confirm('Are you sure?')">Delete</a>
+								</td>
+							</tr>
+						{% endif %}
 					{% endfor %}
 				</tbody>
 			</table>
-		</div>		
+		</div>
 	</div>
-<br><br><br>
+	<br><br><br>
 {% endblock %}

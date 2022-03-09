@@ -40,7 +40,6 @@
 						<th>ID</th>
 						<th>Name</th>
 						<th>Role</th>
-						<th>Avatar</th>
 						<th>Options</th>
 					</tr>
 				</thead>
@@ -61,11 +60,6 @@
 										<p>Staff</p>
 									{% endif %}
 								{% endfor %}
-							</td>
-							<td>
-								<a href="{{ path('user_detail', { id: user.id }) }}">
-									<img src="{{ asset('users/' ~ user.avatar) }}" alt="" height="150px" width="auto" class="users"/>
-								</a>
 							</td>
 							<td>
 								<a name="" id="edit" class="btn" href="{{ path('user_edit', { id: user.id }) }}" role="button">Edit</a>

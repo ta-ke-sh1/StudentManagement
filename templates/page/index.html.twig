@@ -1,7 +1,23 @@
 {% extends 'page/header.html.twig' %}
 {% block body %}
-	<style></style>
+	<style>
+		.row {
+			margin-right: 50px;
+		}
+
+		.widget{
+			width: 100%;
+		}
+	</style>
 	<div class="container-fluid">
+		<div class="row">
+			<div class="col">
+				<div class="widget"></div>
+			</div>
+			<div class="col">
+				<div class="widget"></div>
+			</div>
+		</div>
 		<div
 			class="row">
 			<!-- Teacher -->
@@ -163,8 +179,5 @@
 			</div>
 		</div>
 		<!-- Students -->
-		<div class="row">
-			
-		</div>
 	</div>
 {% endblock %}
