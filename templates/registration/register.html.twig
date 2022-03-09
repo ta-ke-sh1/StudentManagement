@@ -147,7 +147,12 @@
 					<br>
 					<hr>
 					<br>
-<br> {{ form_start(registrationForm) }} {{ form_row(registrationForm.username) }}{{ form_row(registrationForm.plainPassword)}}{{ form_row(registrationForm.lastName) }}{{ form_row(registrationForm.firstName) }}
+					<br>
+					{% for flash in app.flashes("Error") %}
+						<p class="alert alert-danger">{{ flash }}</p>
+					{% endfor %} {{ form_start(registrationForm) }} {{ form_row(registrationForm.username) }} {{ form_row(registrationForm.plainPassword)}} {{ form_row(registrationForm.firstName) }} {{ form_row(registrationForm.lastName) }}
+					<label for="birthday">Birthday</label>
+					<input type="date" name="birthday" id="" class="inp">
 					<button type="submit" id="submit" class="btn inp">Register</button> {{ form_end(registrationForm) }}
 					<a href="{{ path('app_login') }}">
 						<button type="submit" id="cancel" class="btn inp">Cancel</button>

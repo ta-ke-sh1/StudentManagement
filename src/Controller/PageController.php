@@ -6,6 +6,7 @@ use App\Entity\Student;
 use App\Entity\Subject;
 use App\Entity\Teacher;
 use App\Entity\ClassFGW;
+use App\Entity\SubjectSchedule;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -25,6 +26,7 @@ class PageController extends AbstractController
         $students = $this->getDoctrine()->getRepository(Student::class)->findAll();
         $classes = $this->getDoctrine()->getRepository(ClassFGW::class)->findAll();
         $subjects = $this->getDoctrine()->getRepository(Subject::class)->findAll();
+        $schedules = $this->getDoctrine()->getRepository(SubjectSchedule::class)->findAll();
         if ($roles != null) {
             if (in_array('ROLE_STUDENT', $roles)) {
                 return $this->redirectToRoute('student_role_view');
@@ -38,7 +40,8 @@ class PageController extends AbstractController
             'subjects' => $subjects,
             'teachers' => $teachers,
             'classes' => $classes,
-            'students' => $students
+            'students' => $students,
+            'schedules' => $schedules
         ]);
     }
 

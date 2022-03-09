@@ -1,5 +1,4 @@
-
-{% extends 'subject_schedule/header.html.twig' %} 
+{% extends 'subject_schedule/header.html.twig' %}
 {% block title %}Subject Schedules
 {% endblock %}
 {% block body %}
@@ -23,13 +22,13 @@
 						<input type="search" class="form-control" name="keyword" placeholder="Enter Subject name" required/>
 					</form>
 				</div>
-				{# {% if is_granted('ROLE_ADMIN') %} #}
-				<div class="col">
-					<a name="" id="addBtn" class="btn" href="{{ path('schedule_add') }}" role="button">
-						<span class="type" id="add">Add new Schedule</span>
-					</a>
-				</div>
-				{# {% endif %} #}
+				{% if is_granted('ROLE_ADMIN') %}
+					<div class="col">
+						<a name="" id="addBtn" class="btn" href="{{ path('schedule_add') }}" role="button">
+							<span class="type" id="add">Add new Schedule</span>
+						</a>
+					</div>
+				{% endif %}
 				<div class="col">
 					<span class="type">Sort by ID:</span>
 					<a name="" id="" class="btn" href="{{ path('schedule_id_asc') }}" role="button"><img src="{{ asset('icons/up.png') }}" width="20px" height="20px" alt=""/></a>
@@ -43,36 +42,46 @@
 				<thead>
 					<tr id="head">
 						<th>ID</th>
-                        <th>Subject</th>
+						<th>Subject</th>
 						<th>Student</th>
 						<th>Class</th>
 						<th>Starting Date</th>
 						<th>Total Slots</th>
-						<th>Options</th>
+						{% if is_granted('ROLE_ADMIN') %}
+							<th>Options</th>
+						{% endif %}
 					</tr>
 				</thead>
 				<tbody>
 					{% for schedule in schedules %}
 						<tr class="entire_row">
 							<td>{{ schedule.id }}</td>
-							<td>{% if schedule.subject %} {{ schedule.subject.name }}
-								{% endif %}</td>
-							<td>{% if schedule.student %} {{ schedule.student.name }}
-								{% endif %}</td>
-							<td>{% if schedule.class %} {{ schedule.class.name }}
-								{% endif %}</td>
-							<td>{{ schedule.date |  date('d-m-Y')}}</td>
-                            <td>{{ schedule.slot }}</td>
 							<td>
-								<a name="" id="edit" class="btn" href="{{ path('schedule_edit', { id: schedule.id }) }}" role="button">Edit</a>
-								<br/>
-								<a name="" id="delete" class="btn" href="{{ path('schedule_delete', { id: schedule.id }) }}" role="button" onclick="return confirm('Are you sure?')">Delete</a>
+								{% if schedule.subject %} {{ schedule.subject.name }}
+								{% endif %}
 							</td>
+							<td>
+								{% if schedule.student %} {{ schedule.student.name }}
+								{% endif %}
+							</td>
+							<td>
+								{% if schedule.class %} {{ schedule.class.name }}
+								{% endif %}
+							</td>
+							<td>{{ schedule.date |  date('d-m-Y')}}</td>
+							<td>{{ schedule.slot }}</td>
+							{% if is_granted('ROLE_ADMIN') %}
+								<td>
+									<a name="" id="edit" class="btn" href="{{ path('schedule_edit', { id: schedule.id }) }}" role="button">Edit</a>
+									<br/>
+									<a name="" id="delete" class="btn" href="{{ path('schedule_delete', { id: schedule.id }) }}" role="button" onclick="return confirm('Are you sure?')">Delete</a>
+								</td>
+							{% endif %}
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-		</div>		
+		</div>
 	</div>
-<br><br><br>
+	<br><br><br>
 {% endblock %}
