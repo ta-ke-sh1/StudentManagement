@@ -23,13 +23,15 @@ a {
 }
 
 .l-navbar {
-    position: fixed;
-    top: 0;
+    position: absolute;
+    top: -60px;
     left: -20%;
     width: var(--nav-width);
-    height: 100vh;
+    min-height: 100vh;
     transition: 0.5s;
     z-index: var(--z-fixed);
+    overflow: auto;
+    bottom: 0;
 }
 
 .nav {

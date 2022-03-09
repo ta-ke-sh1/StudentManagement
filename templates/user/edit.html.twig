@@ -1,5 +1,10 @@
-{% extends 'base.html.twig' %}
-{% block title %} Edit
+{% form_theme UserForm 'bootstrap_5_layout.html.twig' %}
+{# kế thừa file layout (template) #}
+{%
+extends "user/header.html.twig" %}
+
+{% block title %}
+	Edit
 {% endblock %}
 
 {% block body %}
@@ -10,16 +15,16 @@
 			min-height: 800px;
 		}
 
-		#right-col {
-			max-width: 60%;
+		.container-fluid .row {
+			width: 100%;
 		}
 
 		.widget {
-			margin-top: 120px;
-			margin-right: 4%;
-			margin-left: 22%;
-			width: 540px;
-			z-index: 100;
+			margin-left: 70%;
+			width: fit-content;
+			height: fit-content;
+			padding: 42px 50px;
+			z-index: 10;
 			border: none;
 			background-color: white;
 		}
@@ -27,8 +32,9 @@
 		.subTxt {
 			color: grey;
 		}
+
 		#submit {
-			margin-top: -12px;
+			margin-top: -2px;
 			background: rgb(2, 0, 36);
 			background-size: 300% 100%;
 			color: white;
@@ -36,8 +42,26 @@
 			transition: all 0.4s ease-in-out;
 			background-image: linear-gradient(90deg, #2B32B2 0%, #1488CC 100%);
 			border: none;
+			padding: 20px;
 		}
+
+		#cancel {
+			margin-top: 22px;
+			background: rgb(2, 0, 36);
+			background-size: 300% 100%;
+			color: white;
+			transition-duration: 0.6s;
+			transition: all 0.4s ease-in-out;
+			background-image: linear-gradient(90deg, #d53369 0%, #cbad6d 100%);
+			border: none;
+			padding: 20px;
+		}
+
 		#submit:hover {
+			background-position: 100% 0;
+		}
+
+		#cancel:hover {
 			background-position: 100% 0;
 		}
 
@@ -102,10 +126,6 @@
 			margin-bottom: 16px;
 		}
 
-		body {
-			background-color: whitesmoke
-		}
-
 		p {
 			margin-left: 8px;
 			margin-bottom: 28px;
@@ -116,40 +136,24 @@
 			margin-left: 36px;
 			margin-top: -8px;
 		}
+
+		.widget {
+			min-height: 700px;
+		}
 	</style>
 	<div class="container-fluid col-md-6 text-center ">
 		<div class="row">
 			<div class="col"></div>
 			<div class="col">
-				<div class="widget">
-					<h1>Register</h1> 
-                    {{ form_start(UserForm) }} 
-					{{ form_row(UserForm.avatar)}}
-					{{ form_row(UserForm.username) }}
-					{{ form_row(UserForm.confirmPassword)}}
-					<p class="rem">
-						<div class="round">
-							<input type="checkbox" id="checkbox" name="_remember_me"/>
-							<label for="checkbox"></label>
-							<span class="remember">Edit password?</span>
-						</div>
-					</p> 
-                    <div id="pwd">
-						{{ form_row(UserForm.plainPassword)}}
-                    </div>
-					<button	button type="submit" class="btn">Register</button> {{ form_end(UserForm) }}
+				<div class="widget"> {{ form_start(UserForm) }} {{ form_row(UserForm.username) }}
+
+					<div id="pwd"> {{ form_row(UserForm.plainPassword)}}
+</div>  
+{{ form_row(UserForm.avatar)}}{{ form_row(UserForm.roles)}}{{ form_row(UserForm.student)}}{{ form_row(UserForm.Save)}} {{ form_end(UserForm) }}
+
+
 				</div>
 			</div>
 		</div>
 	</div>
-	<script>
-        function myFunction() {
-        var x = document.getElementById("pwd");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-        }
-    </script>
 {% endblock %}

@@ -2,14 +2,18 @@
 
 namespace App\Form;
 
+use App\Entity\Student;
 use App\Entity\User;
+use App\Form\StudentType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserType extends AbstractType
@@ -35,10 +39,12 @@ class UserType extends AbstractType
                     'class' => 'inp'
                 ]
             ])
-            ->add('confirmPassword', PasswordType::class, [
-                'required' => true,
+            ->add('avatar', FileType::class, [
+                'label' => 'Upload the student\'s image',
+                'data_class' => null,
+                'required' => is_null($builder->getData()->getAvatar()), // getImage(): entity function
+                // if Image == null => required = true; else false
                 'attr' => [
-                    'id' => 'saveBtn',
                     'class' => 'inp'
                 ]
             ])
@@ -51,7 +57,22 @@ class UserType extends AbstractType
                     'id' => 'saveBtn',
                     'class' => 'inp editConfirm'
                 ],
-            ]);
+            ])
+            ->add('student', EntityType::class, [
+                'label' => 'Select the student\'s to link with',
+                'data_class' => null,
+                'class' => Student::class,
+                'choice_label' => 'name',
+                'attr' => [
+                    'class' => 'inp'
+                ]
+            ])
+            ->add('Save', SubmitType::class, [
+                'attr' => [
+                    'class' => 'inp',
+                    'id' => 'submit'
+                ]
+            ]);;
 
         $builder->get('roles')
             ->addModelTransformer(new CallbackTransformer(

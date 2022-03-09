@@ -23,7 +23,7 @@
 			margin-bottom: 0;
 		}
 
-		.widget table{
+		.widget table {
 			overflow: scroll;
 		}
 
@@ -171,9 +171,9 @@
 										<td>{{ grade.numberGrade }}</td>
 										{% if is_granted('ROLE_ADMIN') %}
 											<td>
-												<a name="" id="edit" class="btn" href="#" role="button">Edit</a>
+												<a name="" id="edit" class="btn" href="{{ path('grade_edit', {id: grade.id})}}}}" role="button">Edit</a>
 												<br>
-												<a name="" id="delete" class="btn" href="#" role="button">Delete</a>
+												<a name="" id="delete" class="btn" href="{{ path('grade_edit', {id: grade.id})}}}}" role="button">Delete</a>
 											</td>
 										{% endif %}
 									</tr>

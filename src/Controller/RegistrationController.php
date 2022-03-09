@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Student;
 use App\Form\RegistrationFormType;
 use App\Security\UserAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class RegistrationController extends AbstractController
@@ -23,21 +24,6 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $image = $user->getAvatar();
-            $imgName = $user->getUserIdentifier();
-            $imgExtension = $image->guessExtension();
-            $imgName = $imgName . '.' . $imgExtension;
-            try {
-                $image->move(
-                    $this->getParameter('user_image'), // Tiep tuc edit trong services.yaml trong folder config
-                    $imgName
-                );
-            } catch (FileException $e) {
-                throw $e;
-            }
-
-            $user->setAvatar($imgName);
-            // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -45,7 +31,16 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $user->setRoles(['ROLE_STUDENT']);
+            $student = new Student;
+            $student->setName($user->getLastName() . $user->getFirstName());
+            $student->setImage('anonymous.png');
+            $student->setMajor('Unset');
+            $student->setGpa(0);
+            $student->setDob(\DateTime::createFromFormat('Y/m/d', '2000/01/01'));
+            $user->setStudent($student);
             $entityManager->persist($user);
+            $entityManager->persist($student);
             $entityManager->flush();
 
             return $userAuthenticator->authenticateUser(

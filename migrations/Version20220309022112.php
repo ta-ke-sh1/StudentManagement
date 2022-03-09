@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220301061708 extends AbstractMigration
+final class Version20220309022112 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,16 +20,14 @@ final class Version20220301061708 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user ADD student_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D649CB944F1A FOREIGN KEY (student_id) REFERENCES student (id)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649CB944F1A ON user (student_id)');
+        $this->addSql('CREATE TABLE none (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE user DROP avatar');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D649CB944F1A');
-        $this->addSql('DROP INDEX UNIQ_8D93D649CB944F1A ON user');
-        $this->addSql('ALTER TABLE user DROP student_id');
+        $this->addSql('DROP TABLE none');
+        $this->addSql('ALTER TABLE user ADD avatar VARCHAR(255) NOT NULL');
     }
 }
