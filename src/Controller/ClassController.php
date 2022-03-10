@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ClassFGW;
+use App\Form\ClassType;
 use App\Repository\ClassFGWRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -117,12 +118,12 @@ class ClassController extends AbstractController
     /** 
      * @IsGranted("ROLE_ADMIN")
      */
-    #[Route('/add', name: 'classFGW_add')]
+    #[Route('/add/class', name: 'classFGW_add')]
     public function classFGWAdd(Request $request)
     {
         $user = $this->getUser();
         $classFGW = new ClassFGW;
-        $form = $this->createForm(ClassFGWType::class, $classFGW);
+        $form = $this->createForm(ClassType::class, $classFGW);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
@@ -139,12 +140,12 @@ class ClassController extends AbstractController
     /** 
      * @IsGranted("ROLE_ADMIN")
      */
-    #[Route('/edit/{id}', name: 'classFGW_delete')]
+    #[Route('/edit/{id}', name: 'classFGW_edit')]
     public function classFGWEdit(Request $request, $id)
     {
         $user = $this->getUser();
         $classFGW = $this->getDoctrine()->getRepository(ClassFGW::class)->find($id);
-        $form = $this->createForm(ClassFGWType::class, $classFGW);
+        $form = $this->createForm(ClassType::class, $classFGW);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();

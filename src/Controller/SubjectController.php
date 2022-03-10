@@ -3,11 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Subject;
+use App\Form\SubjectType;
 use App\Repository\SubjectRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/subject')]
 class SubjectController extends AbstractController
@@ -115,7 +116,7 @@ class SubjectController extends AbstractController
     /** 
      * @IsGranted("ROLE_ADMIN")
      */
-    #[Route('/add', name: 'subject_add')]
+    #[Route('/add/sub', name: 'subject_add')]
     public function subjectAdd(Request $request)
     {
         $user = $this->getUser();
