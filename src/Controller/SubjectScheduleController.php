@@ -93,7 +93,7 @@ class SubjectScheduleController extends AbstractController
     /** 
      * @IsGranted("ROLE_ADMIN")
      */
-    #[Route('/add', name: 'schedule_add')]
+    #[Route('/FGW/add', name: 'schedule_add')]
     public function scheduleAdd(Request $request)
     {
         $user = $this->getUser();
@@ -104,7 +104,7 @@ class SubjectScheduleController extends AbstractController
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($schedule);
             $manager->flush();
-            return $this->redirectToRoute("subject_list");
+            return $this->redirectToRoute("schedule_list");
         } else {
             return $this->renderForm("subject_schedule/add.html.twig", [
                 'ScheduleForm' => $form,

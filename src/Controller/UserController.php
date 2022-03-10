@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Form\UserSelfType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,15 +14,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-/**
- * @IsGranted("ROLE_USER")
- */
 #[Route('/user')]
 class UserController extends AbstractController
 {
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     */
     #[Route('/', name: 'user_list')]
     public function userList()
     {
@@ -34,10 +27,6 @@ class UserController extends AbstractController
             "user" => $user
         ]);
     }
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     */
     #[Route('/id/asc', name: 'user_id_asc')]
     public function userSortIdAsc(UserRepository $userRepository)
     {
@@ -49,10 +38,6 @@ class UserController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     */
     #[Route('/search', name: 'user_search')]
     public function userSearch(Request $request, UserRepository $userRepository)
     {
@@ -65,9 +50,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     */
     #[Route('/id/desc', name: 'user_id_desc')]
     public function userSortIdDesc(UserRepository $userRepository)
     {
@@ -79,9 +61,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @IsGranted("ROLE_USER")
-     */
     #[Route('/information', name: 'user_information')]
     public function userCurrent()
     {
@@ -100,9 +79,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     */
     #[Route('/add/newUser', name: 'user_add')]
     public function userAddAnother(Request $request, UserPasswordHasherInterface $userPasswordHasher)
     {
@@ -111,14 +87,13 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $newUser);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
+            
             $newUser->setPassword(
                 $userPasswordHasher->hashPassword(
                     $newUser,
                     $form->get('plainPassword')->getData()
                 )
             );
-
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($newUser);
             $manager->flush();
@@ -131,9 +106,6 @@ class UserController extends AbstractController
         }
     }
 
-    /**
-     * @IsGranted("ROLE_ADMIN")
-     */
     #[Route('/edit/{id}', name: 'user_edit')]
     public function userEdit(Request $request, $id, UserPasswordHasherInterface $userPasswordHasher)
     {
@@ -142,12 +114,26 @@ class UserController extends AbstractController
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            // Xu ly ten & duong dan cua anh
+            // B1: lay du lieu anh tu form
+            $file = $form['avatar']->getData();
+            // B2: check xem du lieu anh null hay k
+            if ($file != null) {
+                $image = $user->getAvatar();
+                $id = uniqid();
+                $imgName = $user->getName() . $id;
+                $imgExtension = $image->guessExtension();
+                $imgName = $imgName . '.' . $imgExtension;
+                try {
+                    $image->move(
+                        $this->getParameter('user_image'), // Tiep tuc edit trong services.yaml trong folder config
+                        $imgName
+                    );
+                } catch (FileException $e) {
+                    throw $e;
+                }
+                $user->setImage($imgName);
+            }
 
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($user);
@@ -160,13 +146,31 @@ class UserController extends AbstractController
                     return $this->redirectToRoute('student_role_view');
                 }
             }
-            return $this->redirectToRoute("user_list");
+            return $this->redirectToRoute("homepage");
         }
-
         return $this->renderForm("user/edit.html.twig", [
             'UserForm' => $form,
             'user' => $userMain
         ]);
+    }
+
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+     */
+    #[Route('/delete/{id}', name: 'user_delete')]
+    public function userDelete($id)
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+
+        if ($user == null) {
+            $this->addFlash('error', "User does not exist!");
+            $this->redirectToRoute("user_list");
+        } else {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->remove($user);
+            $manager->flush();
+        }
+        return $this->redirectToRoute("user_list");
     }
 
     #[Route('/personal/edit', name: 'user_self_edit')]
@@ -201,24 +205,5 @@ class UserController extends AbstractController
             'UserForm' => $form,
             'user' => $user
         ]);
-    }
-
-    /** 
-     * @IsGranted("ROLE_ADMIN")
-     */
-    #[Route('/delete/{id}', name: 'user_delete')]
-    public function userDelete($id)
-    {
-        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
-
-        if ($user == null) {
-            $this->addFlash('error', "User does not exist!");
-            $this->redirectToRoute("user_list");
-        } else {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->remove($user);
-            $manager->flush();
-        }
-        return $this->redirectToRoute("user_list");
     }
 }
