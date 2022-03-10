@@ -15,6 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 #[Route('/user')]
 class UserController extends AbstractController
 {
@@ -76,6 +79,9 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_USER")
+     */
     #[Route('/information', name: 'user_information')]
     public function userCurrent()
     {
@@ -84,7 +90,6 @@ class UserController extends AbstractController
             "user" => $user
         ]);
     }
-
 
     #[Route('/{id}', name: 'user_detail')]
     public function userDetail($id)

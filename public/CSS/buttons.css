@@ -49,6 +49,7 @@
 .widget #addBtn {
     color: #13c08c;
     border: 1px solid #13c08c;
+    width: fit-content;
 }
 
 .widget #addBtn:hover {
