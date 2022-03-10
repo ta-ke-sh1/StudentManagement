@@ -19,6 +19,63 @@ class ClassFGWRepository extends ServiceEntityRepository
         parent::__construct($registry, ClassFGW::class);
     }
 
+    /**
+     * @return ClassFGW[] Returns an array of ClassFGW objects
+     */
+    public function sortByIDAsc()
+    {
+        return $this->createQueryBuilder('classFGW')
+            ->orderBy('classFGW.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return ClassFGW[] Returns an array of ClassFGW objects
+     */
+    public function sortByIDDesc()
+    {
+        return $this->createQueryBuilder('classFGW')
+            ->orderBy('classFGW.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return ClassFGW[] Returns an array of ClassFGW objects
+     */
+    public function sortByNameAsc()
+    {
+        return $this->createQueryBuilder('classFGW')
+            ->orderBy('classFGW.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return ClassFGW[] Returns an array of ClassFGW objects
+     */
+    public function sortByNameDesc()
+    {
+        return $this->createQueryBuilder('classFGW')
+            ->orderBy('classFGW.name', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return ClassFGW[] Returns an array of ClassFGW objects
+     */
+    public function searchClassFGW($keyword)
+    {
+        return $this->createQueryBuilder('classFGW')
+            ->andWhere('classFGW.name LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->orderBy('classFGW.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return ClassFGW[] Returns an array of ClassFGW objects
     //  */

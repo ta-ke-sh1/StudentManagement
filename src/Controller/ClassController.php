@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\ClassFGW;
+use App\Repository\ClassFGWRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +23,63 @@ class ClassController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'classFGW_index')]
+    #[Route('/search', name: 'classFGW_search')]
+    public function classFGWSearch(Request $request, ClassFGWRepository $classFGWRepository)
+    {
+        $user = $this->getUser();
+        $keyword = $request->get("keyword");
+        $classFGWs = $classFGWRepository->searchStudent($keyword);
+        return $this->render('classFGW/index.html.twig', [
+            'classFGWs' => $classFGWs,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/id/asc', name: 'classFGW_id_asc')]
+    public function classFGWSortIdAsc(ClassFGWRepository $classFGWRepository)
+    {
+        $user = $this->getUser();
+        $classFGWs = $classFGWRepository->sortByIDAsc();
+        return $this -> render('classFGW/index.html.twig',[
+            'classFGWs' => $classFGWs,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/id/desc', name: 'classFGW_id_desc')]
+    public function classFGWSortIdDesc(ClassFGWRepository $classFGWRepository)
+    {
+        $user = $this->getUser();
+        $classFGWs = $classFGWRepository->sortByIDDesc();
+        return $this->render('classFGW/index.html.twig', [
+            'classFGWs' => $classFGWs,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/name/asc', name: 'classFGW_name_asc')]
+    public function classFGWSortNameAsc(ClassFGWRepository $classFGWRepository)
+    {
+        $user = $this->getUser();
+        $classFGWs = $classFGWRepository->sortByNameAsc();
+        return $this->render('classFGW/index.html.twig',[
+            'classFGWs' => $classFGWs,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/name/desc', name: 'classFGW_name_desc')]
+    public function classFGWSortNameDesc(ClassFGWRepository $classFGWRepository)
+    {
+        $user = $this->getUser();
+        $classFGWs = $classFGWRepository->sortByNameDesc();
+        return $this->render('classFGW/index.html.twig', [
+            'classFGWs' => $classFGWs,
+            'user' => $user
+        ]);
+    }
+
+    #[Route('/{id}', name: 'classFGW_detail')]
     public function classFGWDetail($id)
     {
         $user = $this->getUser();
