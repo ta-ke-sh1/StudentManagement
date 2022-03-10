@@ -5,13 +5,26 @@ extends "student/index.html.twig" %}
 {# kế thừa file layout (template) #}
 {# override nội dung của phần body trong template #}
 	{% block body %}
+		<style>
+h2 {
+	margin-left: -90px;
+}
+
+.img {
+	margin-left: -90px;
+}
+	</style>
+
 		<div class="container col-md-4 mt-4 text-center"> {% for flash in app.flashes("Success") %}
 			<p class="alert alert-primary">{{ flash }}</p>
 		{% endfor %}
 		{% for flash in app.flashes("Error") %}
 			<p class="alert alert-danger">{{ flash }}</p>
 		{% endfor %}
-
-		<h2 class="text text-primary">Edit Student Information</h2> {{ form (StudentForm) }}
+		<h2 class="text text-primary">Edit Student Information</h2>
+		<br>
+		<img class="img" src="{{ asset('students/' ~ student.image) }}" height="300px" alt="">
+		<br>
+		<br> {{ form (StudentForm) }}
 		</div>
 	{% endblock %}

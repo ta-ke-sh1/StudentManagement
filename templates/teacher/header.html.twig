@@ -17,11 +17,9 @@
 				</a>
 				<div class="nav_list">
 					<br>
-					<a href="{{ path('user_edit', { id: user.id }) }}">
-						<img src="{{ asset('users/' ~ user.avatar) }}" class="avatar" alt=""/>
+					<a href="{{ path('user_self_edit') }}" class="nav_link">
+						Edit User
 					</a>
-					<br>
-					<br>
 					<hr/>
 					<br>
 					{% if is_granted('ROLE_ADMIN') %}
@@ -36,9 +34,16 @@
 					<a href="{{ path('schedule_list') }}" class="nav_link">
 						Schedule
 					</a>
-					<a href="{{ path('student_list') }}" class="nav_link">
-						Students
-					</a>
+					{% if is_granted('ROLE_ADMIN') %}
+						<a href="{{ path('student_list') }}" class="nav_link">
+							Students
+						</a>
+					{% endif %}
+					{% if is_granted('ROLE_STUDENT') %}
+						<a href="{{ path('student_role_view') }}" class="nav_link">
+							Students
+						</a>
+					{% endif %}
 					<a href="{{ path('classFGW_list') }}" class="nav_link">
 						Class
 					</a>

@@ -5,20 +5,24 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Student;
 use App\Form\StudentType;
+use App\Repository\UserRepository;
 use App\Repository\GradeRepository;
 use App\Repository\StudentRepository;
-use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 #[Route('/student')]
 class StudentController extends AbstractController
 {
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/', name: 'student_list')]
     public function studentList()
     {
@@ -30,6 +34,9 @@ class StudentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/search', name: 'student_search')]
     public function studentSearch(Request $request, StudentRepository $studentRepository)
     {
@@ -42,6 +49,9 @@ class StudentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/id/asc', name: 'student_id_asc')]
     public function studentSortIdAsc(StudentRepository $studentRepository)
     {
@@ -53,6 +63,9 @@ class StudentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/id/desc', name: 'student_id_desc')]
     public function studentSortIdDesc(StudentRepository $studentRepository)
     {
@@ -64,6 +77,9 @@ class StudentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/name/asc', name: 'student_name_asc')]
     public function studentSortNameAsc(StudentRepository $studentRepository)
     {
@@ -75,6 +91,9 @@ class StudentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/name/desc', name: 'student_name_desc')]
     public function studentSortNameDesc(StudentRepository $studentRepository)
     {
@@ -136,7 +155,7 @@ class StudentController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
     #[Route('/add', name: 'student_add')]
-    public function studentAdd(Request $request)
+    public function studentAdd(Request $request, UserPasswordHasherInterface $userPasswordHasher)
     {
         $user = $this->getUser();
         $student = new Student;
@@ -176,9 +195,28 @@ class StudentController extends AbstractController
             // B6: Luu ten anh vao DB
             $student->setImage($imgName);
 
+            $user = new User;
+
+            $user->setUsername(str_replace(" ", "", $student->getName()).$prefix);
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    "123456"
+                )
+            );
+
+            $student->setGPA(0);
+
+            $user->setLastName("");
+            $user->setFirstName("");
+            $user->setRoles(['ROLE_STUDENT']);
+            $user->setStudent($student);
+
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($student);
+            $manager->persist($user);
             $manager->flush();
+            
             return $this->redirectToRoute("student_list");
         } else {
             return $this->renderForm("student/add.html.twig", [
@@ -234,13 +272,13 @@ class StudentController extends AbstractController
 
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($student);
-            $manager->persist($user);
             $manager->flush();
-            return $this->redirectToRoute("student_list");
+            return $this->redirectToRoute("homepage");
         } else {
             return $this->renderForm("student/edit.html.twig", [
                 'StudentForm' => $form,
-                'user' => $user
+                'user' => $user,
+                'student' =>$student
             ]);
         }
     }

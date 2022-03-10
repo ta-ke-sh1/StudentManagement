@@ -32,13 +32,18 @@ class RegistrationController extends AbstractController
             );
 
             $user->setRoles(['ROLE_STUDENT']);
+
             $student = new Student;
-            $student->setName($user->getLastName() . $user->getFirstName());
+            $student->setName($user->getFirstName() . ' ' . $user->getLastName());
             $student->setImage('anonymous.png');
             $student->setMajor('Unset');
             $student->setGpa(0);
-            $student->setDob(\DateTime::createFromFormat('Y/m/d', '2000/01/01'));
+            $date = $_POST['birthday'];
+            $date = str_replace("-","/",$date);
+            $student->setDob(\DateTime::createFromFormat('Y/m/d', $date));
+        
             $user->setStudent($student);
+
             $entityManager->persist($user);
             $entityManager->persist($student);
             $entityManager->flush();

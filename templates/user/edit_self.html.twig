@@ -1,11 +1,10 @@
-{# áp dụng template của bootstrap vào form #}
-{% form_theme Form 'bootstrap_5_layout.html.twig' %}
+{% form_theme UserForm 'bootstrap_5_layout.html.twig' %}
 {# kế thừa file layout (template) #}
 {%
 extends "user/header.html.twig" %}
 
 {% block title %}
-	Add new User
+	Edit
 {% endblock %}
 
 {% block body %}
@@ -21,10 +20,9 @@ extends "user/header.html.twig" %}
 		}
 
 		.widget {
-			margin-top: -10px;
 			margin-left: 70%;
 			width: fit-content;
-			height: 820px;
+			height: fit-content;
 			padding: 42px 50px;
 			z-index: 10;
 			border: none;
@@ -33,18 +31,6 @@ extends "user/header.html.twig" %}
 
 		.subTxt {
 			color: grey;
-		}
-
-		#submit {
-			margin-top: -2px;
-			background: rgb(2, 0, 36);
-			background-size: 300% 100%;
-			color: white;
-			transition-duration: 0.6s;
-			transition: all 0.4s ease-in-out;
-			background-image: linear-gradient(90deg, #2B32B2 0%, #1488CC 100%);
-			border: none;
-			padding: 20px;
 		}
 
 		#cancel {
@@ -59,9 +45,6 @@ extends "user/header.html.twig" %}
 			padding: 20px;
 		}
 
-		#submit:hover {
-			background-position: 100% 0;
-		}
 
 		#cancel:hover {
 			background-position: 100% 0;
@@ -143,6 +126,21 @@ extends "user/header.html.twig" %}
 			min-height: 700px;
 		}
 
+		.submit {
+			margin-top: -12px;
+			background: rgb(2, 0, 36);
+			background-size: 300% 100%;
+			color: white;
+			transition-duration: 0.6s;
+			transition: all 0.4s ease-in-out;
+			background-image: linear-gradient(90deg, #2b32b2 0%, #1488cc 100%);
+			border: none;
+		}
+		.submit:hover {
+			background-position: 100% 0;
+			color: white;
+		}
+
 		#student_edit_Save {
 			margin-top: 8px;
 		}
@@ -152,17 +150,15 @@ extends "user/header.html.twig" %}
 			<div class="col"></div>
 			<div class="col">
 				<div class="widget">
+					<h1>Edit my profile</h1>
+					<hr>
+					<br>
 					{% for flash in app.flashes("Error") %}
 						<p class="alert alert-danger">{{ flash }}</p>
-					{% endfor %}
-					<h1>Add new User</h1>
-					<hr>
-					<br> {{ form_start(Form) }} {{ form_row(Form.username) }}
-					<div id="pwd"> {{ form_row(Form.plainPassword)}}
-					</div> {{ form_row(Form.firstName) }} {{ form_row(Form.lastName) }}
-					{% if is_granted('ROLE_ADMIN') %} {{ form_row(Form.roles)}}
-					{% endif %}
-					<input type="submit" value="Save" id="student_edit_Save" class="inp"> {{ form_end(Form) }}
+					{% endfor %} {{ form_start(UserForm) }} {{ form_row(UserForm.username) }}
+					<div id="pwd"> {{ form_row(UserForm.plainPassword)}}
+					</div> {{ form_row(UserForm.firstName) }} {{ form_row(UserForm.lastName) }}
+					<input type="submit" value="Save" id="student_edit_Save" class="inp"> {{ form_end(UserForm) }}
 				</div>
 			</div>
 		</div>
