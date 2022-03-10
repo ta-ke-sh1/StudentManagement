@@ -1,1 +1,77 @@
-{% extends 'classFGW/header.html.twig' %} 
+{% extends 'classFGW/header.html.twig' %}
+{% block title %}ClassFGW
+{% endblock %}
+{% block body %}
+	<label for="widget_classFGW" class="wdgt">
+		<h2>ClassFGWs</h2>
+	</label>
+	<br/>
+	<div class="widget classFGW_table" id="widget_classFGW">
+		<div class="notifications">
+			{% for flash in app.flashes("Success") %}
+				<p class="alert alert-primary">{{ flash }}</p>
+			{% endfor %}
+			{% for flash in app.flashes("Error") %}
+				<p class="alert alert-danger">{{ flash }}</p>
+			{% endfor %}
+		</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col">
+					<form action="{{ path('classFGW_search') }}" method="POST">
+						<input type="search" class="form-control" name="keyword" placeholder="Enter classFGW name" required/>
+					</form>
+				</div>
+				{# {% if is_granted('ROLE_ADMIN') %} #}
+				<div class="col">
+					<a name="" id="addBtn" class="btn" href="{{ path('classFGW_add') }}" role="button">
+						<span class="type" id="add">Add new ClassFGW</span>
+					</a>
+				</div>
+				{# {% endif %} #}
+				<div class="col">
+					<span class="type">Sort by ID:</span>
+					<a name="" id="" class="btn" href="{{ path('classFGW_id_asc') }}" role="button"><img src="{{ asset('icons/up.png') }}" width="20px" height="20px" alt=""/></a>
+					<a name="" id="" class="btn" href="{{ path('classFGW_id_desc') }}" role="button"><img src="{{ asset('icons/down.png') }}" width="20px" height="20px" alt=""/></a>
+				</div>
+				<div class="col">
+					<span class="type">Sort by Name:</span>
+					<a name="" id="" class="btn" href="{{ path('classFGW_name_asc') }}" role="button"><img src="{{ asset('icons/up.png') }}" width="20px" height="20px" alt=""/></a>
+					<a name="" id="" class="btn" href="{{ path('classFGW_name_desc') }}" role="button"><img src="{{ asset('icons/down.png') }}" width="20px" height="20px" alt=""/></a>
+				</div>
+				<div class="col"></div>
+			</div>
+		</div>
+		<div class="tbl">
+			<table class="table" id="tbl">
+				<thead>
+					<tr id="head">
+						<th>ID</th>
+						<th>Name</th>
+						<th>studentNo</th>
+						<th>Year</th>
+						<th>Semester</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for classFGW in classFGWs %}
+						<tr class="entire_row">
+							<td>{{ classFGW.id }}</td>
+							<td>{{ classFGW.name }}</td>
+							<td>{{ classFGW.studentNo }}</td>
+							<td>{{ classFGW.Year}}</td>
+							<td>{{ classFGW.semester}}</td>
+							<td>
+								<a name="" id="edit" class="btn" href="{{ path('classFGW_edit', { id: classFGW.id }) }}" role="button">Edit</a>
+								<br/>
+								<a name="" id="delete" class="btn" href="{{ path('classFGW_delete', { id: classFGW.id }) }}" role="button" onclick="return confirm('Are you sure?')">Delete</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>		
+	</div>
+<br><br><br>
+{% endblock %}

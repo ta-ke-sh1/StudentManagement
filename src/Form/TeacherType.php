@@ -52,11 +52,12 @@ class TeacherType extends AbstractType
                     'class' => 'inp'
                 ]
             ])
-            ->add('Submit', SubmitType::class, [
+            ->add('Save', SubmitType::class, [
                 'attr' => [
-                    'class' => 'inp'
+                    'class' => 'inp',
+                    'id' => 'saveBtn'
                 ]
-            ]);
+            ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

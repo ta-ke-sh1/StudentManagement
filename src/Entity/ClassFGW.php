@@ -30,6 +30,15 @@ class ClassFGW
     #[ORM\OneToMany(mappedBy: 'class', targetEntity: SubjectSchedule::class)]
     private $subjectSchedules;
 
+    #[ORM\Column(type: 'integer')]
+    private $studentNo;
+
+    #[ORM\Column(type: 'integer')]
+    private $Year;
+
+    #[ORM\Column(type: 'string', length: 10)]
+    private $semester;
+
     public function __construct()
     {
         $this->subjects = new ArrayCollection();
@@ -165,6 +174,42 @@ class ClassFGW
                 $subjectSchedule->setClass(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStudentNo(): ?int
+    {
+        return $this->studentNo;
+    }
+
+    public function setStudentNo(int $studentNo): self
+    {
+        $this->studentNo = $studentNo;
+
+        return $this;
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->Year;
+    }
+
+    public function setYear(int $Year): self
+    {
+        $this->Year = $Year;
+
+        return $this;
+    }
+
+    public function getSemester(): ?string
+    {
+        return $this->semester;
+    }
+
+    public function setSemester(string $semester): self
+    {
+        $this->semester = $semester;
 
         return $this;
     }
