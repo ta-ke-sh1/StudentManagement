@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 #[Route('/class')]
 class ClassController extends AbstractController
@@ -94,6 +95,9 @@ class ClassController extends AbstractController
         ]);
     }
 
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/delete/{id}', name: 'classFGW_delete')]
     public function classFGWDelete($id)
     {
@@ -110,6 +114,9 @@ class ClassController extends AbstractController
         return $this->redirectToRoute("classFGW_list");
     }
 
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/add', name: 'classFGW_add')]
     public function classFGWAdd(Request $request)
     {
@@ -129,7 +136,9 @@ class ClassController extends AbstractController
             ]);
         }
     }
-
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/edit/{id}', name: 'classFGW_delete')]
     public function classFGWEdit(Request $request, $id)
     {
