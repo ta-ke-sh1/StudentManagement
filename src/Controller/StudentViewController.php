@@ -13,6 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/** 
+ * @IsGranted("ROLE_STUDENT")
+ */
 class StudentViewController extends AbstractController
 {
     #[Route('/student/homepage', name: 'student_role_view')]

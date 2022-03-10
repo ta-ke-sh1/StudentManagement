@@ -5,11 +5,11 @@ namespace App\Controller;
 use App\Entity\Teacher;
 use App\Form\TeacherType;
 use App\Repository\TeacherRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/FGW/teacher')]
 class TeacherController extends AbstractController
@@ -42,7 +42,7 @@ class TeacherController extends AbstractController
     {
         $user = $this->getUser();
         $teachers = $teacherRepository->sortByIDAsc();
-        return $this -> render('teacher/index.html.twig',[
+        return $this->render('teacher/index.html.twig', [
             'teachers' => $teachers,
             'user' => $user
         ]);
@@ -64,7 +64,7 @@ class TeacherController extends AbstractController
     {
         $user = $this->getUser();
         $teachers = $teacherRepository->sortByNameAsc();
-        return $this->render('teacher/index.html.twig',[
+        return $this->render('teacher/index.html.twig', [
             'teachers' => $teachers,
             'user' => $user
         ]);
@@ -86,13 +86,13 @@ class TeacherController extends AbstractController
     {
         $user = $this->getUser();
         $teacher = $this->getDoctrine()->getRepository(Teacher::class)->Find($id);
-        
+
         if ($teacher == null) {
             $this->addFlash('error', "Teacher does not exist!");
             return $this->redirectToRoute("teacher_list");
         }
 
-        return $this->render('teacher/detail.html.twig',[
+        return $this->render('teacher/detail.html.twig', [
             'teacher' => $teacher,
             'user' => $user
         ]);
@@ -126,13 +126,13 @@ class TeacherController extends AbstractController
         $teacher = new Teacher;
         $form = $this->createForm(TeacherType::class, $teacher);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($teacher);
             $manager->flush();
             return $this->redirectToRoute("teacher_list");
         } else {
-            return $this->renderForm("teacher/add.html.twig",[
+            return $this->renderForm("teacher/add.html.twig", [
                 'TeacherForm' => $form,
                 'user' => $user
             ]);
@@ -143,19 +143,19 @@ class TeacherController extends AbstractController
      * @IsGranted("ROLE_ADMIN")
      */
     #[Route('/edit/{id}', name: 'teacher_edit')]
-    public function teacherEdit(Request $request,$id)
+    public function teacherEdit(Request $request, $id)
     {
         $user = $this->getUser();
         $teacher = $this->getDoctrine()->getRepository(Teacher::class)->find($id);
         $form = $this->createForm(TeacherType::class, $teacher);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($teacher);
             $manager->flush();
             return $this->redirectToRoute("teacher_list");
         } else {
-            return $this->renderForm("teacher/edit.html.twig",[
+            return $this->renderForm("teacher/edit.html.twig", [
                 'TeacherForm' => $form,
                 'user' => $user
             ]);
